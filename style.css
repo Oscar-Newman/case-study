@@ -9,5 +9,27 @@ h1 {
     margin-left: auto;
     margin-right: auto;
     width: 40%;
-  }
-  
+}
+
+form {
+    width: 40%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px;
+    border-style: groove;
+}
+
+label {
+    display: block;
+    text-align: center;
+}
+
+input/*[type=text], select, textarea*/ {
+    width: 40%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px;
+    border-style: groove;
+}

@@ -8,6 +8,24 @@
     </head>
     <body>
         <h1>Add Employee</h1>
-        <button class="button button1">Add Employee</button>
+        <form>
+            <label for="fname">First name</label>
+            <input type="text" id="fname" name="fname" required><br>
+            <label for="mname">Middle name</label>
+            <input type="text" id="mname" name="mname"><br>
+            <label for="lname">Last name</label>
+            <input type="text" id="lname" name="lname" required><br>
+            <label for="birthday">Birthday</label>
+            <input type="date" id="birthday" name="birthday" max="2000-10-01" required><br>
+            <label for="job">Position</label>
+            <input type="text" id="job" name="job" required><br>
+            <input type="submit" value="Add Employee">
+        </form>
+        <script>
+            const d = new Date().toISOString().split("T")[0];
+            document.getElementById("birthday").setAttribute("max",d);
+        </script>
+        <br>
+        <!-- <button class="button button1">Add Employee</button>-->
     </body>
 </html>

@@ -5,9 +5,38 @@
         <title>
             Search Employees
         </title>
+        <script>
+			function clearForm() {
+  				document.getElementById("search").reset();
+			}
+            function submitForm() {
+                var firstname = document.forms["search"]["fname"].value;
+                var lastname = document.forms["search"]["lname"].value;
+                var position = document.forms["search"]["job"].value;
+                var search = "<Employee><firstname>"+firstname+"</firstname><lastname>"+lastname+"</lastname><position>"+position+"</position></Employee>"
+                var parser = new DOMParser();
+                xmlDoc = parser.parseFromString(search,"search/xml");
+                document.getElementById("result").innerHTML = xmlDoc.getElementsByTagName("position")[0].childNodes[0].nodeValue;
+            }
+	    </script>
     </head>
     <body>
         <h1>Search Employees</h1>
-        <button class="button button1">Add Employee</button>
+        <form id="search" onsubmit="return false">
+            <label for="fname">First name</label>
+            <input type="text" id="fname" name="fname"><br>
+            <label for="lname">Last name</label>
+            <input type="text" id="lname" name="lname"><br>
+            <label for="job">Position</label>
+            <input type="text" id="job" name="job"><br>
+            <input type="submit" value="Search Employee">
+        </form>
+        <br>
+        <button class="button button1" type="button" onclick="clearForm()">Clear</button>
+        <br>
+        <button class="button button1" type="button" onclick="submitForm()">Submit</button>
+        <p id="result"></p>
+        <p id="result2"></p>
+        <p id="result3"></p>
     </body>
 </html>

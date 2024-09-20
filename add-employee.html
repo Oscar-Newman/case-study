@@ -21,11 +21,13 @@
             <input type="text" id="job" name="job" required><br>
             <input type="submit" value="Add Employee">
         </form>
+        <p></p>
         <script>
             const d = new Date().toISOString().split("T")[0];
             document.getElementById("birthday").setAttribute("max",d);
         </script>
         <br>
+        <p id="response"></p>
         <!-- <button class="button button1">Add Employee</button>-->
     </body>
 </html>

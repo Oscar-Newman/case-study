@@ -34,35 +34,20 @@ export async function deleteEmployeeById (id) {
     }
 };
 
-export async function updateEmployeeById (firstName, middleName, lastName, birthDate, position) 
+export async function updateEmployeeById (firstName, middleName, lastName, birthDate, position, id) 
 {
     try {   
-        const values = [firstName, middleName, lastName, birthDate, position]; 
-        if (!middleName || typeof middleName !== 'string') 
-        {
-            values.splice(1, 1);
-            console.log(firstName, lastName, birthDate, position);
-            const query = `
-                INS employee (firstname, lastname, date, position) 
-                VALUES ($1, $2, $3, $4) RETURNING emp_id;`;
+        const values = [firstName, middleName, lastName, birthDate, position, parseInt(id)]; 
+        const query = `
+            UPDATE employee
+            SET firstname = $1, middlename = $2, lastname = $3, date = $4, position = $5 
+            WHERE emp_id = $6;`;
 
-            const results = await pool.query(query, values);
-            console.log(results);
-            return NextResponse.json(results, {status: 200});
-        }
-        else 
-        {
-            const query = `
-                INSERT INTO employee (firstname, middlename, lastname, date, position) 
-                VALUES ($1, $2, $3, $4, $5) RETURNING emp_id;`;
-            
-            const results = await pool.query(query, values);
-            console.log(results);
-            return NextResponse.json(results, {status: 200});
-        }
-
-        
-        
+        console.log("LINE BEFORE RESULTS");
+        const results = await pool.query(query, values);
+        console.log("LINE AFTER RESULTS");
+        console.log(results);
+        return NextResponse.json(results, {status: 200});   
     }
     catch (err) {
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});

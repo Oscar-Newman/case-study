@@ -1,19 +1,47 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "../../../../../lib/db";
+import {deleteEmployeeById, getEmployeeById} from "../../../../../lib/dbRoutes";
 
-export async function GET(req: NextRequest, { params }: {params: Promise<{id: string}>}) {
+
+export async function GET(req: NextRequest, { params }: {params: Promise<{id: string}>}) 
+{
     const { id } = await params;
     console.log(`${id}`);
-    
+
+    return getEmployeeById(id);
+}
+
+export async function DELETE(req: NextRequest, { params }: {params: Promise<{id: string}>}) 
+{
+    const { id } = await params;
+    console.log(`${id}`);
+
+    return deleteEmployeeById(id);
+}
+
+export async function PUT(req: NextRequest, { params }: {params: Promise<{id: string}>}) 
+{
+    const { id } = await params;
+    console.log(`${id}`);
+
     try {
-        const results = await pool.query(`SELECT emp_id, firstname, middlename, lastname, date, position FROM employee WHERE emp_id = ${[id]}`);
-        if (results.rows.length == 0) {
-            return NextResponse.json({error : "Employee not found"}, {status: 404})
-        }
-        return NextResponse.json(results.rows[0]);
+        const data = await req.formData();
+        const firstname = data.get('firstName');
+        //const middlename = data.get('middleName');
+        //const lastname = data.get('lastName');
+        //const birthdate = data.get('birthDate');
+        //const position = data.get('position');    
+
+        console.log(firstname);
     }
     catch (err) {
-        return NextResponse.json({error: "Internal Server Error"}, {status: 500});
+        console.error(err);
     }
-   
+
+
+
+
+
+    return NextResponse.json({"temp": "not implemented yet"});
 }
+

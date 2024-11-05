@@ -48,10 +48,7 @@ export async function updateEmployeeById (firstName, middleName, lastName, birth
             SET firstname = $1, middlename = $2, lastname = $3, date = $4, position = $5 
             WHERE emp_id = $6;`;
 
-        console.log("LINE BEFORE RESULTS");
         const results = await pool.query(query, values);
-        console.log("LINE AFTER RESULTS");
-        console.log(results);
         return NextResponse.json(results, {status: 200});   
     }
     catch (err) {
@@ -62,30 +59,25 @@ export async function updateEmployeeById (firstName, middleName, lastName, birth
 
 export async function addEmployeeToDatabase (firstName, middleName, lastName, birthDate, position) 
 {
-    console.log(firstName, middleName, lastName, birthDate, position);
     try {    
         if (!middleName || typeof middleName !== 'string') 
         {
             const values = [firstName, lastName, birthDate, position]; 
-            console.log(firstName, lastName, birthDate, position);
             const query = `
                 INSERT INTO employee (firstname, middlename, lastname, date, position) 
                 VALUES ($1, NULL, $2, $3, $4) RETURNING emp_id;`;
 
             const results = await pool.query(query, values);
-            console.log(results);
             return NextResponse.json(results, {status: 200});
         }
         else 
         {
             const values = [firstName, middleName, lastName, birthDate, position]; 
-            console.log(firstName, lastName, birthDate, position);
             const query = `
                 INSERT INTO employee (firstname, middlename, lastname, date, position) 
                 VALUES ($1, $2, $3, $4, $5) RETURNING emp_id;`;
             
             const results = await pool.query(query, values);
-            console.log(results);
             return NextResponse.json(results, {status: 200});
         }
 
@@ -135,16 +127,40 @@ export async function searchForEmployee (firstName, lastName, position)
                 values.push(position);
                 index++;
             } 
-        
-        console.log("QUERY BELOW");
-        console.log(query);
-        console.log(values);
         const results = await pool.query(query, values);
         return NextResponse.json(results.rows, {status: 200});
     }
     catch (err) {
-        console.log(err);
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 }
 
+export async function getAllCompensations() 
+{
+    try {
+        const results = await pool.query(`SELECT * FROM compensation;`);
+        if (results.rows.length == 0) {
+            return NextResponse.json({error : "No compensations found"}), {status: 404};
+        }
+        return NextResponse.json(results.rows, {status: 200});
+    }
+    catch (err) {
+        return NextResponse.json({error: "Internal Server Error"}, {status: 500});
+    }
+}
+
+export async function addCompensationToDatabase (compType, amount, description, date, employeeId) 
+{
+    try {    
+        const values = [compType, parseFloat(amount), description, date, parseInt(employeeId)]; 
+        const query = `
+            INSERT INTO compensation (type, amount, description, date, fk_employee) 
+            VALUES ($1, $2, $3, $4, $5);`;
+
+        const results = await pool.query(query, values);
+        return NextResponse.json(results, {status: 200});
+    }
+    catch (err) {
+        return NextResponse.json({error: "Internal Server Error"}, {status: 500});
+    }
+}

@@ -1,17 +1,29 @@
-//POST
-//PUT
-
-
 import { NextRequest, NextResponse } from "next/server";
-import { addEmployeeToDatabase } from "../../../../lib/dbRoutes";
+import {ErrorFields} from "../../../../../../lib/interface";
+import {deleteEmployeeById, getEmployeeById, updateEmployeeById} from "../../../../../../lib/dbRoutes";
 
-interface ErrorFields 
+
+export async function GET(req: NextRequest, { params }: {params: Promise<{id: string}>}) 
 {
-    [key: string]: string;
+    const { id } = await params;
+    console.log(`${id}`);
+
+    return getEmployeeById(id);
 }
 
-export async function POST(req: NextRequest) 
+export async function DELETE(req: NextRequest, { params }: {params: Promise<{id: string}>}) 
 {
+    const { id } = await params;
+    console.log(`${id}`);
+
+    return deleteEmployeeById(id);
+}
+
+export async function PUT(req: NextRequest, { params }: {params: Promise<{id: string}>}) 
+{
+    const { id } = await params;
+    console.log(`${id}`);
+
     try {
         const data = await req.formData();
         const firstname = data.get('firstName');
@@ -37,13 +49,14 @@ export async function POST(req: NextRequest)
         if (Object.keys(errors).length > 0) 
         {
             return NextResponse.json({error: "Bad Request"}, {status: 400});
-        }
-        
-        return addEmployeeToDatabase(firstname, middlename, lastname, birthdate, position);
+        }  
 
+        return updateEmployeeById(firstname, middlename, lastname, birthdate, position, id);
+        
     }
     catch (err) {
         console.error(err);
-        return NextResponse.json({error: "Issue occured"}, {status: 403})
+        return NextResponse.json({error: "Internal Server Error"}, {status: 403})
     }
 }
+

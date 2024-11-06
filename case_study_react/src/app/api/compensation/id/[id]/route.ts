@@ -1,6 +1,3 @@
-// PUT
-// Edit amount and description ONLY using ID
-
 import { NextRequest, NextResponse } from "next/server";
 import {ErrorFields} from "../../../../../../lib/interface";
 import {getCompensationById, deleteCompensationById, updateCompensationById} from "../../../../../../lib/dbRoutes";

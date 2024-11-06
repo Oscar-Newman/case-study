@@ -4,7 +4,8 @@ const pool = require('./db.js');
 
 export async function getEmployeeById (id) {
     
-    try {
+    try 
+    {
         const value = [id];
         const query = `SELECT * FROM employee WHERE emp_id = $1;`
         const results = await pool.query(query, value);
@@ -13,14 +14,16 @@ export async function getEmployeeById (id) {
         }
         return NextResponse.json(results.rows[0], {status: 200});
     }
-    catch (err) {
+    catch (err) 
+    {
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 };
 
 export async function deleteEmployeeById (id) {
     
-    try {
+    try 
+    {
         const value = [id];
         const searchQuery = `SELECT * FROM employee WHERE emp_id = $1;`
         const searchResult = await pool.query(searchQuery, value);
@@ -34,14 +37,16 @@ export async function deleteEmployeeById (id) {
            return NextResponse.json(results.rows, {status: 200});
         }     
     }
-    catch (err) {
+    catch (err) 
+    {
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 };
 
 export async function updateEmployeeById (firstName, middleName, lastName, birthDate, position, id) 
 {
-    try {   
+    try 
+    {   
         const values = [firstName, middleName, lastName, birthDate, position, parseInt(id)]; 
         const query = `
             UPDATE employee
@@ -51,7 +56,8 @@ export async function updateEmployeeById (firstName, middleName, lastName, birth
         const results = await pool.query(query, values);
         return NextResponse.json(results, {status: 200});   
     }
-    catch (err) {
+    catch (err) 
+    {
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 }
@@ -59,7 +65,8 @@ export async function updateEmployeeById (firstName, middleName, lastName, birth
 
 export async function addEmployeeToDatabase (firstName, middleName, lastName, birthDate, position) 
 {
-    try {    
+    try 
+    {    
         if (!middleName || typeof middleName !== 'string') 
         {
             const values = [firstName, lastName, birthDate, position]; 
@@ -84,21 +91,24 @@ export async function addEmployeeToDatabase (firstName, middleName, lastName, bi
         
         
     }
-    catch (err) {
+    catch (err) 
+    {
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 }
 
 export async function getAllEmployees() 
 {
-    try {
+    try 
+    {
         const results = await pool.query(`SELECT * FROM employee;`);
         if (results.rows.length == 0) {
             return NextResponse.json({error : "No employees found"}), {status: 404};
         }
         return NextResponse.json(results.rows, {status: 200});
     }
-    catch (err) {
+    catch (err) 
+    {
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 }
@@ -108,7 +118,8 @@ export async function searchForEmployee (firstName, lastName, position)
     const values = [];
     let query = "SELECT * FROM employee WHERE 1=1";
     let index = 1;
-    try {
+    try 
+    {
         if (firstName)
         {
             query += ` AND firstname = $${index}`
@@ -130,28 +141,32 @@ export async function searchForEmployee (firstName, lastName, position)
         const results = await pool.query(query, values);
         return NextResponse.json(results.rows, {status: 200});
     }
-    catch (err) {
+    catch (err) 
+    {
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 }
 
 export async function getAllCompensations() 
 {
-    try {
+    try 
+    {
         const results = await pool.query(`SELECT * FROM compensation;`);
         if (results.rows.length == 0) {
             return NextResponse.json({error : "No compensations found"}), {status: 404};
         }
         return NextResponse.json(results.rows, {status: 200});
     }
-    catch (err) {
+    catch (err) 
+    {
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 }
 
 export async function addCompensationToDatabase (compType, amount, description, date, employeeId) 
 {
-    try {    
+    try 
+    {    
         const values = [compType, parseFloat(amount), description, date, parseInt(employeeId)]; 
         const query = `
             INSERT INTO compensation (type, amount, description, date, fk_employee) 
@@ -160,14 +175,16 @@ export async function addCompensationToDatabase (compType, amount, description, 
         const results = await pool.query(query, values);
         return NextResponse.json(results, {status: 200});
     }
-    catch (err) {
+    catch (err) 
+    {
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 }
 
 export async function getCompensationById (id) 
 {
-    try {
+    try
+    {
         const value = [id];
         const query = `SELECT * FROM compensation WHERE comp_id = $1;`
         const results = await pool.query(query, value);
@@ -176,14 +193,16 @@ export async function getCompensationById (id)
         }
         return NextResponse.json(results.rows[0], {status: 200});
     }
-    catch (err) {
+    catch (err) 
+    {
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 }
 
 export async function deleteCompensationById (id)
 {
-    try {
+    try 
+    {
         const value = [id];
         const searchQuery = `SELECT * FROM compensation WHERE comp_id = $1;`
         const searchResult = await pool.query(searchQuery, value);
@@ -197,14 +216,16 @@ export async function deleteCompensationById (id)
            return NextResponse.json(results.rows, {status: 200});
         }     
     }
-    catch (err) {
+    catch (err) 
+    {
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 }
 
 export async function updateCompensationById (amount, description, id)
 {
-    try {   
+    try 
+    {   
         const values = [amount, description, parseInt(id)]; 
         const query = `
             UPDATE compensation
@@ -215,6 +236,24 @@ export async function updateCompensationById (amount, description, id)
         return NextResponse.json(results, {status: 200});   
     }
     catch (err) {
+        return NextResponse.json({error: "Internal Server Error"}, {status: 500});
+    }
+}
+
+export async function searchForCompensations (startDate, endDate, employeeId) 
+{
+    try 
+    {
+        const values = [parseInt(employeeId), startDate, endDate];
+        const query = `SELECT date, amount, comp_id FROM compensation 
+                       WHERE fk_employee = $1 
+                       AND date BETWEEN $2 AND $3`;
+
+        const results = await pool.query(query, values);
+        return NextResponse.json(results.rows, {status: 200});
+    }
+    catch (err) 
+    {
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 }

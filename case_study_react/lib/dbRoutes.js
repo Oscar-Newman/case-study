@@ -164,3 +164,57 @@ export async function addCompensationToDatabase (compType, amount, description, 
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 }
+
+export async function getCompensationById (id) 
+{
+    try {
+        const value = [id];
+        const query = `SELECT * FROM compensation WHERE comp_id = $1;`
+        const results = await pool.query(query, value);
+        if (results.rows.length == 0) {
+            return NextResponse.json({error : "Compensation not found"}, {status: 404});
+        }
+        return NextResponse.json(results.rows[0], {status: 200});
+    }
+    catch (err) {
+        return NextResponse.json({error: "Internal Server Error"}, {status: 500});
+    }
+}
+
+export async function deleteCompensationById (id)
+{
+    try {
+        const value = [id];
+        const searchQuery = `SELECT * FROM compensation WHERE comp_id = $1;`
+        const searchResult = await pool.query(searchQuery, value);
+        if (searchResult.rows.length == 0) {
+            return NextResponse.json({error : "Compensation not found"}, {status: 404});
+        }
+        else 
+        {
+           const deleteQuery = `DELETE FROM compensation WHERE comp_id = $1;` 
+           const results = await pool.query(deleteQuery, value);
+           return NextResponse.json(results.rows, {status: 200});
+        }     
+    }
+    catch (err) {
+        return NextResponse.json({error: "Internal Server Error"}, {status: 500});
+    }
+}
+
+export async function updateCompensationById (amount, description, id)
+{
+    try {   
+        const values = [amount, description, parseInt(id)]; 
+        const query = `
+            UPDATE compensation
+            SET amount = $1, description = $2 
+            WHERE comp_id = $3;`;
+
+        const results = await pool.query(query, values);
+        return NextResponse.json(results, {status: 200});   
+    }
+    catch (err) {
+        return NextResponse.json({error: "Internal Server Error"}, {status: 500});
+    }
+}

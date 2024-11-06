@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 const pool = require('./db.js');
 
@@ -257,3 +257,29 @@ export async function searchForCompensations (startDate, endDate, employeeId)
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 }
+
+export async function getCompensationsByEmployeeIdAndDate(employeeId, date)
+{
+    try 
+    {
+        console.log(employeeId, date);
+        const dateSeparated = date.split('-');
+        const year = dateSeparated[0];
+        const month = dateSeparated[1];
+        console.log(year, month);
+
+        const values = [year, month, parseInt(employeeId)];
+        const query = `SELECT * FROM compensation 
+                    WHERE EXTRACT(YEAR FROM date) = $1 AND 
+                    EXTRACT(MONTH FROM date) = $2 AND
+                    fk_employee = $3;`
+
+        const results = await pool.query(query, values);
+        return NextResponse.json(results.rows, {status: 200});
+    }
+    catch (err)
+    {
+        return NextResponse.json({error: "Internal Server Error"}, {status: 500});
+    }   
+}
+    

@@ -1,14 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { addCompensationToDatabase, addEmployeeToDatabase } from "../../../../../lib/dbRoutes";
-
-interface ErrorFields 
-{
-    [key: string]: string;
-}
+import { addCompensationToDatabase } from "../../../../../lib/dbRoutes";
+import { ErrorFields } from "../../../../../lib/interface";
 
 export async function POST(req: NextRequest) 
 {
-    
     try {
         const data = await req.formData();
         const compType = data.get('compType');
@@ -18,7 +13,6 @@ export async function POST(req: NextRequest)
         const employeeId = data.get('employeeId');    
 
         const errors : ErrorFields = {};
-        console.log("WHERE ARE WE");
         console.log(compType, amount, description, data, employeeId);
         if (!compType || typeof compType !== 'string') {
             errors.compType = "Compensation Type is required and must be a string.";

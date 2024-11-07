@@ -1,3 +1,14 @@
 node_modules/
 node_modules
 .env
+.next
+.next/
+./.next/
+.next
+.*
+.next/server/app/api/employee/id/\[id]/route_client-reference-manifest.js
+.next/server/app/api/compensations/search/route_client-reference-manifest.js
+.next/server/app/api/employees/all/route_client-reference-manifest.js
+.next/cache/webpack/client-development/1.pack.gz
+.next/cache/webpack/client-development/7.pack.gz
+.next/cache/webpack/client-development/3.pack.gz

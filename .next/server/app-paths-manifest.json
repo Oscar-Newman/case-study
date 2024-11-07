@@ -1,4 +1,0 @@
-{
-  "/api/compensations/search/route": "app/api/compensations/search/route.js",
-  "/api/compensations/all/route": "app/api/compensations/all/route.js"
-}

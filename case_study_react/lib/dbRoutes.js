@@ -1,25 +1,34 @@
 import { NextResponse } from "next/server";
 
+// imports PostgreSQL database pool to query the local database
 const pool = require('./db.js');
 
+// Uses Employee ID in URL to retrieve all database fields for Employee object
 export async function getEmployeeById (id) {
     
     try 
     {
+        // Converts ID given as parameter and adds it to list to be used in parameterised query
         const value = [id];
+        // Creation of Query where $1 represents parameterised parameter
         const query = `SELECT * FROM employee WHERE emp_id = $1;`
         const results = await pool.query(query, value);
+
+        // Checks if any results were returned from the database
         if (results.rows.length == 0) {
             return NextResponse.json({error : "Employee not found"}, {status: 404});
         }
+        // Returns the data as JSON and status code
         return NextResponse.json(results.rows[0], {status: 200});
     }
     catch (err) 
     {
+        // Returns error JSON body and status code
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 };
 
+// Uses Employee ID in URL to delete database record for that Employee object
 export async function deleteEmployeeById (id) {
     
     try 
@@ -43,6 +52,7 @@ export async function deleteEmployeeById (id) {
     }
 };
 
+// Uses Employee ID and the data from the UI form to update all database fields for Employee object
 export async function updateEmployeeById (firstName, middleName, lastName, birthDate, position, id) 
 {
     try 
@@ -62,7 +72,7 @@ export async function updateEmployeeById (firstName, middleName, lastName, birth
     }
 }
 
-
+// Uses the data from the UI form to post new data to the database and create new Employee object
 export async function addEmployeeToDatabase (firstName, middleName, lastName, birthDate, position) 
 {
     try 
@@ -97,6 +107,7 @@ export async function addEmployeeToDatabase (firstName, middleName, lastName, bi
     }
 }
 
+// Uses SQL to retrieve data for all Employee objects in the database
 export async function getAllEmployees() 
 {
     try 
@@ -113,6 +124,7 @@ export async function getAllEmployees()
     }
 }
 
+// Uses search params inputted into API URL from UI to find an employee object based on a combination of first name, last name and position
 export async function searchForEmployee (firstName, lastName, position) 
 {
     const values = [];
@@ -147,6 +159,7 @@ export async function searchForEmployee (firstName, lastName, position)
     }
 }
 
+// Uses SQL to retrieve data for all Compensation objects in the database
 export async function getAllCompensations() 
 {
     try 
@@ -163,6 +176,7 @@ export async function getAllCompensations()
     }
 }
 
+// Uses the data from the UI form to post new data to the database and create new Compensation object
 export async function addCompensationToDatabase (compType, amount, description, date, employeeId) 
 {
     try 
@@ -181,6 +195,7 @@ export async function addCompensationToDatabase (compType, amount, description, 
     }
 }
 
+// Uses Compensation ID in URL to retrieve all database fields for Compensation object
 export async function getCompensationById (id) 
 {
     try
@@ -199,6 +214,7 @@ export async function getCompensationById (id)
     }
 }
 
+// Uses Employee ID in URL to delete database record for that Employee object
 export async function deleteCompensationById (id)
 {
     try 
@@ -222,6 +238,7 @@ export async function deleteCompensationById (id)
     }
 }
 
+// Uses Compensation ID and the data from the UI form to update all database fields for Compensation object
 export async function updateCompensationById (amount, description, id)
 {
     try 
@@ -240,6 +257,7 @@ export async function updateCompensationById (amount, description, id)
     }
 }
 
+// Uses the searchForCompensations API endpoint and calculates compensation for each month/year individually and returns JS Map
 export function calculateTotalCompensationPerMonth(compensations) 
 {
     let compensationPerYearMonth = new Map();
@@ -275,6 +293,8 @@ export function calculateTotalCompensationPerMonth(compensations)
     return compensationPerYearMonth;
 }
 
+// Uses SQL to find Compensation objects which are within a date range using the BETWEEN sql operator for a certain employee
+// Values are passed using search params into endpoint
 export async function searchForCompensations (startDate, endDate, employeeId) 
 {
     try 
@@ -300,6 +320,8 @@ export async function searchForCompensations (startDate, endDate, employeeId)
     }
 }
 
+// Used by getCompensationsByEmployeeIdAndDate to extend API endpoint to return the total compensation for A SINGLE MONTH
+// which the date is present within e.g., 09 aka September
 export function calculateCompensationForSingleMonth(compensations) 
 {
     let sumCompensation = 0;
@@ -307,15 +329,14 @@ export function calculateCompensationForSingleMonth(compensations)
     for (let i = 0; i < Object.keys(compensations).length; i++) 
     {   
         const amount = parseFloat(compensations[i].amount);
-        console.log(`amount ${amount}`);
-        //console.log(`amount ${parseFloat(amount)} ${typeof parseFloat(amount)}`);
         sumCompensation += amount;
     }
-    //console.log(sumCompensation.toFixed(2));
     return sumCompensation.toFixed(2);
 
 }
 
+// Get all Compensation object data from the database for ONE compensation only
+// Uses compensations/breakdown API where employeeId and date are passed as inputs into URL
 export async function getCompensationsByEmployeeIdAndDate(employeeId, date)
 {
     try 

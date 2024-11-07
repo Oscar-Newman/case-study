@@ -240,16 +240,59 @@ export async function updateCompensationById (amount, description, id)
     }
 }
 
+export function calculateTotalCompensationPerMonth(compensations) 
+{
+    let compensationPerYearMonth = new Map();
+    for (let i = 0; i < Object.keys(compensations).length; i++) 
+    {
+        const stringDate = JSON.stringify(compensations[i].date)
+        //String processing to achieve YYYY-mm notation
+        const amount = compensations[i].amount;
+        const dateArray = stringDate.split("-");
+        const year = dateArray[0].replace('"', '');
+        const month = dateArray[1];
+        const yearMonth = year + "-" + month;
+
+        console.log(yearMonth);
+
+        if (compensationPerYearMonth.has(yearMonth))
+        {
+            let currentCompensation = compensationPerYearMonth.get(yearMonth);
+            console.log(currentCompensation, amount);
+            //Sum Calculation
+            console.log(parseFloat(parseFloat(currentCompensation).toFixed(2)));
+            console.log(parseFloat(parseFloat(amount).toFixed(2)));
+            let sum = (parseFloat(currentCompensation) + 
+                        parseFloat(amount)).toFixed(2);
+            console.log(`sum ${sum}`);
+            compensationPerYearMonth.set(yearMonth, sum);
+        }
+        else 
+        {
+            compensationPerYearMonth.set(yearMonth, parseFloat(amount).toFixed(2));
+        }
+    }
+    return compensationPerYearMonth;
+}
+
 export async function searchForCompensations (startDate, endDate, employeeId) 
 {
     try 
     {
+        //Query the database to see compensations during this time frame
         const values = [parseInt(employeeId), startDate, endDate];
         const query = `SELECT date, amount, comp_id FROM compensation 
                        WHERE fk_employee = $1 
                        AND date BETWEEN $2 AND $3`;
 
         const results = await pool.query(query, values);
+
+        //Summate the costs of each of these compensations per month to see total compensation each month
+        const compensationPerYearMonth = calculateTotalCompensationPerMonth(results.rows);
+
+        console.log(compensationPerYearMonth.entries());
+        console.log(JSON.stringify(Object.fromEntries(compensationPerYearMonth)));
+        return NextResponse.json(Object.fromEntries(compensationPerYearMonth), {status: 200});
         return NextResponse.json(results.rows, {status: 200});
     }
     catch (err) 

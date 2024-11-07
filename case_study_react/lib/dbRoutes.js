@@ -293,12 +293,27 @@ export async function searchForCompensations (startDate, endDate, employeeId)
         console.log(compensationPerYearMonth.entries());
         console.log(JSON.stringify(Object.fromEntries(compensationPerYearMonth)));
         return NextResponse.json(Object.fromEntries(compensationPerYearMonth), {status: 200});
-        return NextResponse.json(results.rows, {status: 200});
     }
     catch (err) 
     {
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
+}
+
+export function calculateCompensationForSingleMonth(compensations) 
+{
+    let sumCompensation = 0;
+    console.log(Object.keys(compensations).length);
+    for (let i = 0; i < Object.keys(compensations).length; i++) 
+    {   
+        const amount = parseFloat(compensations[i].amount);
+        console.log(`amount ${amount}`);
+        //console.log(`amount ${parseFloat(amount)} ${typeof parseFloat(amount)}`);
+        sumCompensation += amount;
+    }
+    //console.log(sumCompensation.toFixed(2));
+    return sumCompensation.toFixed(2);
+
 }
 
 export async function getCompensationsByEmployeeIdAndDate(employeeId, date)
@@ -318,6 +333,8 @@ export async function getCompensationsByEmployeeIdAndDate(employeeId, date)
                     fk_employee = $3;`
 
         const results = await pool.query(query, values);
+        const monthCompensation = calculateCompensationForSingleMonth(results.rows);
+        results.rows.push({ monthCompensation: monthCompensation});
         return NextResponse.json(results.rows, {status: 200});
     }
     catch (err)

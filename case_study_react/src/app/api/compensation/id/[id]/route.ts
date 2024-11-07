@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {ErrorFields} from "../../../../../../lib/interface";
 import {getCompensationById, deleteCompensationById, updateCompensationById} from "../../../../../../lib/dbRoutes";
 
-// User Story 1.8
+// GET Compensation object using ID
 export async function GET(req: NextRequest, { params }: {params: Promise<{id: string}>}) 
 {
     const { id } = await params;
@@ -11,6 +11,7 @@ export async function GET(req: NextRequest, { params }: {params: Promise<{id: st
     return getCompensationById(id);
 }
 
+// DELETE Compensation object using ID
 export async function DELETE(req: NextRequest, { params }: {params: Promise<{id: string}>}) 
 {
     const { id } = await params;
@@ -19,7 +20,7 @@ export async function DELETE(req: NextRequest, { params }: {params: Promise<{id:
     return deleteCompensationById(id);
 }
 
-// User Story 1.8
+// UPDATE Compensation object using ID and data passed from form
 export async function PUT(req: NextRequest, { params }: {params: Promise<{id: string}>}) 
 {
     const { id } = await params;

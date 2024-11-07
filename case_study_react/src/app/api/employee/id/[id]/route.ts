@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {ErrorFields} from "../../../../../../lib/interface";
 import {deleteEmployeeById, getEmployeeById, updateEmployeeById} from "../../../../../../lib/dbRoutes";
 
-
+// GET Employee object by ID
 export async function GET(req: NextRequest, { params }: {params: Promise<{id: string}>}) 
 {
     const { id } = await params;
@@ -11,6 +11,7 @@ export async function GET(req: NextRequest, { params }: {params: Promise<{id: st
     return getEmployeeById(id);
 }
 
+// DELETE Employee object by ID
 export async function DELETE(req: NextRequest, { params }: {params: Promise<{id: string}>}) 
 {
     const { id } = await params;
@@ -19,6 +20,7 @@ export async function DELETE(req: NextRequest, { params }: {params: Promise<{id:
     return deleteEmployeeById(id);
 }
 
+// UPDATE Employee object by ID using data from UI form
 export async function PUT(req: NextRequest, { params }: {params: Promise<{id: string}>}) 
 {
     const { id } = await params;

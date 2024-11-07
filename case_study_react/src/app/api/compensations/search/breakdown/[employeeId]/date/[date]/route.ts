@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { getCompensationsByEmployeeIdAndDate } from "../../../../../../../../../lib/dbRoutes";
 
-// User Story 1.7
+// Params object to take in multiple parameters from REST API URL
 type Params = 
 {
     employeeId: Promise<{employeeId: string}>;
@@ -10,7 +10,7 @@ type Params =
 
 export async function GET(req: NextRequest, { params }: {params: Params}) 
 {
-    // Use search params to get detailed breakdown of compensation
+    // Use inputs in Rest API URL to get detailed breakdown of compensation
     const { employeeId, date} = await params;
 
     return getCompensationsByEmployeeIdAndDate(employeeId, date);

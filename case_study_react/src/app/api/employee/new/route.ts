@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { addEmployeeToDatabase } from "../../../../../lib/dbRoutes";
+import { ErrorFields } from "../../../../../lib/interface";
 
-interface ErrorFields 
-{
-    [key: string]: string;
-}
-
+// POST to add new Employee object to database
 export async function POST(req: NextRequest) 
 {
     try {

@@ -1,10 +1,10 @@
 import { NextRequest } from "next/server";
 import { searchForCompensations } from "../../../../../lib/dbRoutes";
 
-// User Story 1.6
+// Use the search params from REST API URL to search for compensations using search fields in UI
 export async function GET(req: NextRequest) 
 {
-    // Get the search params of the view compensation history search
+    // Gets API URL
     const url = new URL(req.url);
     const startDate = url.searchParams.get("startDate");
     const endDate = url.searchParams.get("endDate");

@@ -7,7 +7,6 @@ export default function AddEmployee() {
       return (
         useEffect(() => {
             const d = new Date().toISOString().split("T")[0];
-            //document.getElementById("response").innerHTML = new Date().toISOString().split("T")[0];
             document.getElementById("birthDate")!.setAttribute("max",d);
         })
       );

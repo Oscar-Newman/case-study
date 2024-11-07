@@ -1,0 +1,44 @@
+{
+  "pages": {
+    "/api/employees/all/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/employees/all/route.js"
+    ],
+    "/api/employees/search/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/employees/search/route.js"
+    ],
+    "/api/employee/new/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/employee/new/route.js"
+    ],
+    "/api/employee/id/[id]/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/employee/id/[id]/route.js"
+    ],
+    "/api/compensations/search/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/compensations/search/route.js"
+    ],
+    "/api/compensation/new/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/compensation/new/route.js"
+    ],
+    "/api/compensations/all/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/compensations/all/route.js"
+    ],
+    "/api/compensation/id/[id]/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/compensation/id/[id]/route.js"
+    ]
+  }
+}

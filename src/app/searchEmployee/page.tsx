@@ -69,7 +69,7 @@ export default function searchEmployee() {
         {
             setData('Error completing search!');
         }
-        clearForm();
+        //clearForm();
     }
 
     return (

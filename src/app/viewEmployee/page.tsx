@@ -1,7 +1,10 @@
 'use client'
 import React, {useEffect, FormEvent} from "react";
+import { useRouter } from "next/navigation";
+
 
 export default function viewEmployee() {
+    const router = useRouter();
     function getDate() {
         return (
           useEffect(() => {
@@ -44,6 +47,7 @@ export default function viewEmployee() {
                         <input type="submit" value="Edit Employee" />
                     </form>
                     <p id="result"></p>
+                    <button onClick={() => router.push('/')}>Home</button>
                 </div>
             </main>
         </div>

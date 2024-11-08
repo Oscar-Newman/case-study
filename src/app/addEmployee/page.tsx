@@ -1,7 +1,9 @@
 'use client'
 import React, {useEffect, useState} from "react";
+import { useRouter } from "next/navigation";
 
 export default function AddEmployee() {
+    const router = useRouter();
     const [message, setMessage] = useState("");
     function getDate() {
       return (
@@ -68,6 +70,7 @@ export default function AddEmployee() {
         <p id="response">{ message }</p>
         <></>
         <br/>
+        <button onClick={() => router.push('/')}>Home</button>
         </div>
       </main>
     </div>

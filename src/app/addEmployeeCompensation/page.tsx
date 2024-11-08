@@ -1,7 +1,10 @@
 'use client'
 import React, {useState} from "react";
+import { useRouter } from "next/navigation";
+  
 export default function AddEmployeeCompensation() {
     const [message, setMessage] = useState("");
+    const router = useRouter();
 
     function clearForm() {
         return ((document.getElementById("addCompensation")! as HTMLFormElement).reset());
@@ -38,7 +41,6 @@ export default function AddEmployeeCompensation() {
         
         clearForm();    
     }
-
     return (
         <div>
             <main>
@@ -61,6 +63,7 @@ export default function AddEmployeeCompensation() {
                         <input type="month" id="payDate" name="payDate" pattern="[0-9]{4}-[0-9]{2}" required/><br />
                         <input type="submit" value="Add Employee Compensation" />
                     </form>
+                    <button onClick={() => router.push('/')}>Home</button>
                     <p id="message">{message}</p>
                 </div>
             </main>

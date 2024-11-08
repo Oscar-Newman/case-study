@@ -10,8 +10,9 @@ export default function AddEmployeeCompensation() {
     
     const onSubmit = async (event) => {
         event.preventDefault();
-        const formData = new FormData(event.target);
-  
+        let formData = new FormData(event.target);
+        formData.append("employeeId", "1");
+
         try 
         {
           console.log(event.target);

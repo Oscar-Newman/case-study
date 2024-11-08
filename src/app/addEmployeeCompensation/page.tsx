@@ -10,11 +10,23 @@ export default function AddEmployeeCompensation() {
         return ((document.getElementById("addCompensation")! as HTMLFormElement).reset());
     }
 
+    function formatDateMonthToFullDate(yearMonth)
+    {
+      const [year, month] = yearMonth.split("-");
+      const date = new Date(year, month, 0);
+
+      const lastDay = date.getDate();
+      return `${year}-${String(month).padStart(2, '0')}-${String(lastDay).padStart(2, '0')}`;
+    }
+
     
     const onSubmit = async (event) => {
         event.preventDefault();
         let formData = new FormData(event.target);
         formData.append("employeeId", "1");
+        
+        const payDateFull = formatDateMonthToFullDate(formData.get("payDate"));
+        formData.append("payDateFull", payDateFull);
 
         try 
         {

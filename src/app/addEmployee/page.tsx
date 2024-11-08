@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 export default function AddEmployee() {
     const router = useRouter();
-    const [message, setMessage] = useState("");
+    const [data, setData] = useState("");
     function getDate() {
       return (
         useEffect(() => {
@@ -29,21 +29,21 @@ export default function AddEmployee() {
         if (response.ok)
         {
           event.target.reset();
-          setMessage('Form submitted successfully!');
+          setData(JSON.stringify(data));
           event.target.reset();
 
         }
         else 
         {
           event.target.reset();
-          setMessage('Error submitting form!');
+          setData('Error submitting form!');
           event.target.reset();
         }
       }
       catch (error)
       {
         event.target.reset();
-        setMessage('Error submitting form!');
+        setData('Error submitting form!');
       }
       
     }
@@ -67,7 +67,7 @@ export default function AddEmployee() {
             <input type="text" id="position" name="position" required /><br />
             <input type="submit" value="Add Employee" />
         </form>
-        <p id="response">{ message }</p>
+        <p id="response">{ data }</p>
         <></>
         <br/>
         <button onClick={() => router.push('/')}>Home</button>

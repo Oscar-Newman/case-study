@@ -28,13 +28,13 @@ export default function searchEmployee() {
         <h1>Search Employees</h1>
         <form id="search" onSubmit={submitForm}>
           <label>First name</label>
-          <input type="text" id="firstName" name="firstName" required /><br />
+          <input type="text" id="firstName" name="firstName" /><br />
           <label>Middle name</label>
           <input type="text" id="middleName" name="middleName" /><br />
           <label>Last name</label>
-          <input type="text" id="lastName" name="lastName" required /><br />
+          <input type="text" id="lastName" name="lastName" /><br />
           <label>Position</label>
-          <input type="text" id="position" name="position" required /><br />
+          <input type="text" id="position" name="position" /><br />
           <input type="submit" value="Search Employee" />
         </form>
         <br/>

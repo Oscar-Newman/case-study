@@ -1,9 +1,11 @@
 'use client'
-import React, { FormEvent } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 
 
 
 export default function searchEmployee() {
+    const [data, setData] = useState("");
+    
     function clearForm() {
         return ((document.getElementById("search")! as HTMLFormElement).reset());
     }
@@ -12,13 +14,62 @@ export default function searchEmployee() {
         event.preventDefault()
         // submit form without clearing fields
         var firstname = document.forms["search"]["firstName"].value;
-        var middlename = document.forms["search"]["middleName"].value;
         var lastname = document.forms["search"]["lastName"].value
         var position = document.forms["search"]["position"].value;
-        // from here make database call with values gathered
-        var search = firstname+" "+middlename+" "+lastname+" "+position;
-        document.getElementById("result")!.innerHTML = search;
-        // above is just to test it gets the values
+
+        var apiCall = `http://localhost:3000/api/employees/search?`;
+        let firstParam = true; 
+        if (firstname && !(firstname.length === 0))
+        {
+            firstParam = false;
+            apiCall += `firstName=${firstname}`;
+        }
+        if (lastname && firstParam == false && !(firstname.length === 0))
+        {
+            apiCall += `&lastName=${lastname}`;
+        }
+        else if (lastname && firstParam == true && !(lastname.length === 0))
+        {
+            apiCall += `lastName=${lastname}`;
+        }
+        if (position && firstParam == false && !(position.length === 0))
+        {
+            apiCall += `&position=${position}`;
+        }
+        else if (position && firstParam == true && !(position.length === 0))
+        {
+            apiCall += `position=${position}`;
+        }
+        
+        try 
+        {
+            const response = await fetch(apiCall, 
+                {
+                    method: 'GET'
+                }
+            );
+            const data = await response.json();
+            console.log(data);
+
+            if (response.ok && JSON.stringify(data) != '[]')
+            {
+                setData(JSON.stringify(data));
+            }
+            else if (JSON.stringify(data) == '[]')
+            {
+                setData('0 results found');
+            }
+            else
+            {
+                setData('Error completing search!');
+            }
+
+        }
+        catch (error)
+        {
+            setData('Error completing search!');
+        }
+        clearForm();
     }
 
     return (
@@ -38,7 +89,7 @@ export default function searchEmployee() {
         <br/>
         <button onClick={() => clearForm()}>Clear</button>
         <br/>
-        <p id="result"></p>
+        <p id="result">{data}</p>
         </div>
         </main>
         </div>

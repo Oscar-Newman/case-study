@@ -29,8 +29,6 @@ export default function searchEmployee() {
         <form id="search" onSubmit={submitForm}>
           <label>First name</label>
           <input type="text" id="firstName" name="firstName" /><br />
-          <label>Middle name</label>
-          <input type="text" id="middleName" name="middleName" /><br />
           <label>Last name</label>
           <input type="text" id="lastName" name="lastName" /><br />
           <label>Position</label>

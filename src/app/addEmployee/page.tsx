@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from "react";
 
 export default function AddEmployee() {
-    const [status, setStatus] = useState(null);
+    const [message, setMessage] = useState("");
     function getDate() {
       return (
         useEffect(() => {
@@ -16,7 +16,6 @@ export default function AddEmployee() {
       event.preventDefault();
       const formData = new FormData(event.target);
 
-
       try 
       {
         console.log(event.target);
@@ -28,21 +27,21 @@ export default function AddEmployee() {
         if (response.ok)
         {
           event.target.reset();
-          setStatus('Form submitted successfully!');
+          setMessage('Form submitted successfully!');
           event.target.reset();
+
         }
         else 
         {
           event.target.reset();
-          setStatus('Error submitting form!');
+          setMessage('Error submitting form!');
           event.target.reset();
         }
       }
       catch (error)
       {
         event.target.reset();
-        setStatus('Error submitting form!');
-        event.target.reset();
+        setMessage('Error submitting form!');
       }
       
     }
@@ -66,9 +65,9 @@ export default function AddEmployee() {
             <input type="text" id="position" name="position" required /><br />
             <input type="submit" value="Add Employee" />
         </form>
-        <p></p>
+        <p id="response">{ message }</p>
+        <></>
         <br/>
-        <p id="response"></p>
         </div>
       </main>
     </div>

@@ -1,9 +1,12 @@
 'use client'
 import React, { FormEvent } from "react";
+import { useRouter } from "next/navigation";
+
 
 
 
 export default function searchEmployee() {
+    const router = useRouter();
     function clearForm() {
         return ((document.getElementById("search")! as HTMLFormElement).reset());
     }

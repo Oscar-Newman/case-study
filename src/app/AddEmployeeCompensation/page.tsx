@@ -16,11 +16,11 @@ export default function AddEmployeeCompensation() {
                             <option value={"Adjustment"}>Adjustment</option>
                         </select>
                         <label>Amount</label>
-                        <input type="number" id="amount" name="amount" /><br />
+                        <input type="number" id="amount" name="amount" required/><br />
                         <label>Description</label>
                         <input type="text" id="description" name="description" /><br />
                         <label>Date YYYY-MM</label>
-                        <input type="month" id="payDate" name="payDate" pattern="[0-9]{4}-[0-9]{2}" /><br />
+                        <input type="month" id="payDate" name="payDate" pattern="[0-9]{4}-[0-9]{2}" required/><br />
                         <input type="submit" value="Add Employee Compensation" />
                     </form>
                 </div>

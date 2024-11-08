@@ -89,7 +89,7 @@ export default function EditEmployeeCompensation() {
                     <h1>Edit Employee Compensation</h1>
                     <form id="editCompensation" onSubmit={ submitForm }>
                         <label>Type</label>
-                        <select name="type" id="type" disabled>
+                        <select name="type" id="type" value={compensationObject.compType} disabled>
                             <option value={"Salary"}>Salary</option>
                             <option value={"Bonus"}>Bonus</option>
                             <option value={"Commission"}>Commission</option>

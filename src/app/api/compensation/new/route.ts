@@ -11,7 +11,7 @@ export async function POST(req: NextRequest)
         const compType = data.get('compType');
         const amount = data.get('amount');
         const description = data.get('description');
-        const date = data.get('date');
+        const date = data.get('payDate');
         const employeeId = data.get('employeeId');    
 
         // Check types of data collected and add any incorrect fields to Error Fields object

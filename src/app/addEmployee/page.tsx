@@ -33,7 +33,7 @@ export default function AddEmployee() {
           // Clear the form
           event.target.reset();
           // Add response to UI variable using setter and useState()
-          setMessage(JSON.stringify(message));
+          setMessage('Form submitted successfully!');
           event.target.reset();
 
         }

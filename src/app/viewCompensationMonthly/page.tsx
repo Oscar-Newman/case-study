@@ -17,6 +17,7 @@ export default function viewCompensationMonthly() {
         {
           console.log(event.target);
           // CANNOT hard code employee ID
+          // Call the API on submit
           const response = await fetch(`/api/compensations/search/breakdown/1/date/${compDate}`, {
             method: 'GET'
           })

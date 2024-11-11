@@ -15,15 +15,21 @@ export default function searchEmployee() {
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
         // submit form without clearing fields
+        // Get values from the form
         var firstname = document.forms["search"]["firstName"].value;
         var lastname = document.forms["search"]["lastName"].value
         var position = document.forms["search"]["position"].value;
 
+        // Standard API call for search without any search params
         var apiCall = `http://localhost:3000/api/employees/search?`;
+        // bool to check if the parameter is the first one or added on at the end
         let firstParam = true; 
+        // Checks if value firstName is truthy (does exist and is not null) and is not ""
         if (firstname && !(firstname.length === 0))
         {
+            // Reset boolean so next parameter will require a &
             firstParam = false;
+            // Concatenate text to end of API call
             apiCall += `firstName=${firstname}`;
         }
         if (lastname && firstParam == false && !(firstname.length === 0))
@@ -32,6 +38,8 @@ export default function searchEmployee() {
         }
         else if (lastname && firstParam == true && !(lastname.length === 0))
         {
+            // Reset boolean so next parameter will require a &
+            firstParam = false;
             apiCall += `lastName=${lastname}`;
         }
         if (position && firstParam == false && !(position.length === 0))
@@ -45,6 +53,7 @@ export default function searchEmployee() {
         
         try 
         {
+            // Use crafted API call to GET items from the database
             const response = await fetch(apiCall, 
                 {
                     method: 'GET'
@@ -52,11 +61,12 @@ export default function searchEmployee() {
             );
             const data = await response.json();
             console.log(data);
-
+            // If API call returned some data
             if (response.ok && JSON.stringify(data) != '[]')
             {
                 setData(JSON.stringify(data));
             }
+            // If call succeeded and no data was returned
             else if (JSON.stringify(data) == '[]')
             {
                 setData('0 results found');

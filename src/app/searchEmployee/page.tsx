@@ -9,7 +9,17 @@ export default function searchEmployee() {
     const [data, setData] = useState("");
     
     function clearForm() {
-        return ((document.getElementById("search")! as HTMLFormElement).reset());
+        (document.getElementById("search")! as HTMLFormElement).reset();
+        const empty = document.createElement("p");
+        document.getElementById("result")!.replaceChildren(empty);
+    }
+
+    async function updateResults(data: string) {
+        const output = document.createElement("button");
+        const node = document.createTextNode(await data);
+        output.appendChild(node);
+        const outputArea = document.getElementById("result")!;
+        outputArea.replaceChildren(output);
     }
 
     async function submitForm(event: FormEvent<HTMLFormElement>) {
@@ -83,11 +93,7 @@ export default function searchEmployee() {
             setData('Error completing search!');
         }
         console.log(data);
-        const output = await document.createElement("button");
-        const node = await document.createTextNode(data);
-        await output.appendChild(node);
-        const outputArea = await document.getElementById("result")!;
-        await outputArea.replaceChildren(output);
+        updateResults(data);
         //clearForm();
     }
 
@@ -103,13 +109,15 @@ export default function searchEmployee() {
           <input type="text" id="lastName" name="lastName" /><br />
           <label>Position</label>
           <input type="text" id="position" name="position" /><br />
-          <input type="submit" value="Search Employee" />
+          <input type="submit" value="Search Employee"/>
         </form>
         <br/>
         <button onClick={() => clearForm()}>Clear</button>
         <button onClick={() => router.push('/')}>Home</button>
         <button onClick={() => router.push(`/viewEmployee?emp_id=${1}`)}>View Employee</button>
         <br/>
+        "make run without button"-comment
+        <button onClick={() => updateResults(data)}>Update</button>
         <div id="result"></div>
         </div>
         </main>

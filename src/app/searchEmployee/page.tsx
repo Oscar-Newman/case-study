@@ -108,7 +108,7 @@ export default function searchEmployee() {
         <br/>
         <button onClick={() => clearForm()}>Clear</button>
         <button onClick={() => router.push('/')}>Home</button>
-        <button onClick={() => router.push('/viewEmployee')}>View Employee</button>
+        <button onClick={() => router.push(`/viewEmployee?emp_id=${1}`)}>View Employee</button>
         <br/>
         <div id="result"></div>
         </div>

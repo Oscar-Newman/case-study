@@ -1,10 +1,11 @@
 'use client'
 import React, {useEffect, useState} from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 
 export default function viewEmployee() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [message, setMessage] = useState("");
     // Object to save data to
     // Field names must match what is in database
@@ -35,7 +36,7 @@ export default function viewEmployee() {
         const fetchEmployeeData = async () => {
             try 
             {
-                const response = await fetch(`/api/employee/id/15`, {
+                const response = await fetch(`/api/employee/id/${searchParams.get('emp_id')}`, {
                     method: 'GET',
                 })
                 if (response.ok)

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 export default function AddEmployee() {
     const router = useRouter();
-    const [data, setData] = useState("");
+    const [message, setMessage] = useState("");
     function getDate() {
       return (
         useEffect(() => {
@@ -16,10 +16,12 @@ export default function AddEmployee() {
 
     const onSubmit = async (event) => {
       event.preventDefault();
+      // Use form data where event is the ID of the HTML form
       const formData = new FormData(event.target);
 
       try 
       {
+        // Call API URL to create a new employee
         console.log(event.target);
         const response = await fetch('/api/employee/new', {
           method: 'POST',
@@ -28,22 +30,24 @@ export default function AddEmployee() {
 
         if (response.ok)
         {
+          // Clear the form
           event.target.reset();
-          setData(JSON.stringify(data));
+          // Add response to UI variable using setter and useState()
+          setMessage(JSON.stringify(message));
           event.target.reset();
 
         }
         else 
         {
           event.target.reset();
-          setData('Error submitting form!');
+          setMessage('Error submitting form!');
           event.target.reset();
         }
       }
       catch (error)
       {
         event.target.reset();
-        setData('Error submitting form!');
+        setMessage('Error submitting form!');
       }
       
     }
@@ -67,7 +71,7 @@ export default function AddEmployee() {
             <input type="text" id="position" name="position" required /><br />
             <input type="submit" value="Add Employee" />
         </form>
-        <p id="response">{ data }</p>
+        <p id="response">{ message }</p>
         <></>
         <br/>
         <button onClick={() => router.push('/')}>Home</button>

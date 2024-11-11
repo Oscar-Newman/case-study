@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 export default function viewEmployee() {
     const router = useRouter();
     const [message, setMessage] = useState("");
+    // Object to save data to
+    // Field names must match what is in database
     const [employee , setEmployee] = useState({
         emp_id: '',
         firstname: '',

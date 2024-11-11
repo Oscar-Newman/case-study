@@ -20,7 +20,6 @@ export default function viewCompensationTotal() {
         endDate = formatDateMonthToFullDate(endDate);
 
         var apiCall = `http://localhost:3000/api/compensations/search?`;
-        console.log("HOW DOES THIS WORK");
         let firstParam = true; 
         if (startDate && !(startDate.length === 0))
         {
@@ -33,6 +32,7 @@ export default function viewCompensationTotal() {
         }
         else if (endDate && firstParam == true && !(endDate.length === 0))
         {
+            firstParam = false;
             apiCall += `endDate=${endDate}`;
         }
         if (employeeId && firstParam == false && !(employeeId.length === 0))
@@ -52,11 +52,9 @@ export default function viewCompensationTotal() {
                 }
             );
             const data = await response.json();
-            console.log("IS THIS DATA",data);
 
             if (response.ok && JSON.stringify(data) != '[]')
             {
-                console.log("did we get here");
                 setData(JSON.stringify(data));
             }
             else if (JSON.stringify(data) == '[]')

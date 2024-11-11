@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect }from "react";
 import { useRouter } from "next/navigation";
+import { formatDateToShortDate } from "../../../lib/functions";
 
 
 export default function EditEmployeeCompensation() {
@@ -18,22 +19,19 @@ export default function EditEmployeeCompensation() {
         return ((document.getElementById("editCompensation")! as HTMLFormElement).reset());
     }
 
-    function formatDate(databaseDate: string) {
-        const [year, month] = databaseDate.split("-");
-        return `${year}-${month}`;
-    }
-
+    // Runs every time page is loaded
     useEffect(() => {
         const fetchCompensationData = async () => {
             try 
             {
+                // Use API URL to the details of the object
                 const response = await fetch(`/api/compensation/id/18`, {
                     method: 'GET',
                 })
                 if (response.ok)
                 {
                     const data = await response.json();
-                    var smallDate = formatDate(data.date);
+                    var smallDate = formatDateToShortDate(data.date);
                     data.date = smallDate;
                     setCompensationObject(data);
                 
@@ -61,6 +59,7 @@ export default function EditEmployeeCompensation() {
             console.log(event.target);
 
             // cannot HARD-CODE compensation ID
+            // Runs API call to update a compensation
             const response = await fetch(`/api/compensation/id/18`, {
                 method: 'PUT',
                 body: formData,

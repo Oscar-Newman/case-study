@@ -7,11 +7,11 @@ export default function viewEmployee() {
     const router = useRouter();
     const [message, setMessage] = useState("");
     const [employee , setEmployee] = useState({
-        empId: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        birthDate: '',
+        emp_id: '',
+        firstname: '',
+        middlename: '',
+        lastname: '',
+        to_char: '',
         position: '',
     });
 
@@ -40,8 +40,6 @@ export default function viewEmployee() {
                 {
                     const data = await response.json();
                     setEmployee(data);
-                    console.log(data.emp_id, data.to_char, data.firstname, data.middlename);
-                
                 }
                 else
                 {
@@ -94,27 +92,27 @@ export default function viewEmployee() {
                     {getDate()}
                     <form id="editEmployee"  onSubmit={submitForm}>
                         <label>Employee UUID</label>
-                        <input type="text" id="empId" name="empId" value={employee.empId} required disabled/>
+                        <input type="text" id="empId" name="empId" value={employee.emp_id} required disabled/>
                         <br />
                         <label>First name</label>
-                        <input type="text" id="firstName" name="firstName" value={employee.firstName} required
+                        <input type="text" id="firstName" name="firstName" value={employee.firstname} required
                         onChange={(e) =>
-                            setEmployee({...employee,  firstName: e.target.value})}/>
+                            setEmployee({...employee,  firstname: e.target.value})}/>
                         <br />
                         <label>Middle name</label>
-                        <input type="text" id="middleName" name="middleName" value={employee.middleName} 
+                        <input type="text" id="middleName" name="middleName" value={employee.middlename} 
                         onChange={(e) =>
-                            setEmployee({...employee,  middleName: e.target.value})}/>
+                            setEmployee({...employee,  middlename: e.target.value})}/>
                         <br />
                         <label>Last name</label>
-                        <input type="text" id="lastName" name="lastName" value={employee.lastName} required 
+                        <input type="text" id="lastName" name="lastName" value={employee.lastname} required 
                         onChange={(e) =>
-                            setEmployee({...employee,  lastName: e.target.value})}/>
+                            setEmployee({...employee,  lastname: e.target.value})}/>
                         <br />
                         <label>Birthday</label>
-                        <input type="date" id="birthDate" name="birthDate" value={employee.birthDate} required
+                        <input type="date" id="birthDate" name="birthDate" value={employee.to_char} required
                         onChange={(e) =>
-                            setEmployee({...employee,  birthDate: e.target.value})}/>
+                            setEmployee({...employee,  to_char: e.target.value})}/>
                         <br />
                         <label>Position</label>
                         <input type="text" id="position" name="position" value={employee.position} required

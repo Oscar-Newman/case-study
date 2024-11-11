@@ -100,6 +100,8 @@ export default function searchEmployee() {
         </form>
         <br/>
         <button onClick={() => clearForm()}>Clear</button>
+        <button onClick={() => router.push('/')}>Home</button>
+        <button onClick={() => router.push('/viewEmployee')}>View Employee</button>
         <br/>
         <p id="result">{data}</p>
         </div>

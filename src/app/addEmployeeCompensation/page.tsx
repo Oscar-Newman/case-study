@@ -1,24 +1,30 @@
 'use client'
 import React, {useState} from "react";
 import { useRouter } from "next/navigation";
+import { formatDateMonthToFullDate } from "../../../lib/functions";
   
 export default function AddEmployeeCompensation() {
     const [message, setMessage] = useState("");
     const router = useRouter();
 
+    // Function to remove elements of form using its ID in HTML
     function clearForm() {
         return ((document.getElementById("addCompensation")! as HTMLFormElement).reset());
     }
 
-    
     const onSubmit = async (event) => {
         event.preventDefault();
         let formData = new FormData(event.target);
+        // Hard-coded
         formData.append("employeeId", "1");
+        
+        // Change pay date from YYYY-MM in UI to YYYY-MM-FF
+        const payDateFull = formatDateMonthToFullDate(formData.get("payDate"));
+        formData.append("payDateFull", payDateFull);
 
         try 
         {
-          console.log(event.target);
+          // Go to API to create new compensation using form data as input
           const response = await fetch('/api/compensation/new', {
             method: 'POST',
             body: formData,

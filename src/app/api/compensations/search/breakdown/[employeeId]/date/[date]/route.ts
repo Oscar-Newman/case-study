@@ -13,5 +13,8 @@ export async function GET(req: NextRequest, { params }: {params: Params})
     // Use inputs in Rest API URL to get detailed breakdown of compensation
     const { employeeId, date} = await params;
 
+    console.log(employeeId);
+    console.log("DATE", date);
+
     return getCompensationsByEmployeeIdAndDate(employeeId, date);
 }

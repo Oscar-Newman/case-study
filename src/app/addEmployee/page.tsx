@@ -16,10 +16,12 @@ export default function AddEmployee() {
 
     const onSubmit = async (event) => {
       event.preventDefault();
+      // Use form data where event is the ID of the HTML form
       const formData = new FormData(event.target);
 
       try 
       {
+        // Call API URL to create a new employee
         console.log(event.target);
         const response = await fetch('/api/employee/new', {
           method: 'POST',
@@ -28,8 +30,10 @@ export default function AddEmployee() {
 
         if (response.ok)
         {
+          // Clear the form
           event.target.reset();
-          setMessage('Form submitted successfully!');
+          // Add response to UI variable using setter and useState()
+          setMessage(JSON.stringify(message));
           event.target.reset();
 
         }

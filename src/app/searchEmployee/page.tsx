@@ -75,12 +75,19 @@ export default function searchEmployee() {
             {
                 setData('Error completing search!');
             }
+            
 
         }
         catch (error)
         {
             setData('Error completing search!');
         }
+        console.log(data);
+        const output = await document.createElement("button");
+        const node = await document.createTextNode(data);
+        await output.appendChild(node);
+        const outputArea = await document.getElementById("result")!;
+        await outputArea.replaceChildren(output);
         //clearForm();
     }
 
@@ -103,7 +110,7 @@ export default function searchEmployee() {
         <button onClick={() => router.push('/')}>Home</button>
         <button onClick={() => router.push(`/viewEmployee?emp_id=${1}`)}>View Employee</button>
         <br/>
-        <p id="result">{data}</p>
+        <div id="result"></div>
         </div>
         </main>
         </div>

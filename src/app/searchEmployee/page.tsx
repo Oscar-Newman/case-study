@@ -93,7 +93,7 @@ export default function searchEmployee() {
             setData('Error completing search!');
         }
         console.log(data);
-        updateResults(data);
+        //updateResults(data);
         //clearForm();
     }
 
@@ -116,7 +116,7 @@ export default function searchEmployee() {
         <button onClick={() => router.push('/')}>Home</button>
         <button onClick={() => router.push(`/viewEmployee?emp_id=${1}`)}>View Employee</button>
         <br/>
-        "make run without button"-comment
+        {/*make run without button */}
         <button onClick={() => updateResults(data)}>Update</button>
         <div id="result"></div>
         </div>

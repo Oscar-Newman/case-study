@@ -91,6 +91,7 @@ export default function viewCompensationTotal() {
                         <input type="submit" value="View Total Compensation" />
                     </form>
                     <p id="result">{ data }</p>
+                    <button onClick={() => router.push(`/viewCompensationMonthly?emp_id=${searchParams.get('emp_id')}`)}>View Monthly Compensation</button>
                     <button onClick={() => router.push('/')}>Home</button>
                 </div>
             </main>

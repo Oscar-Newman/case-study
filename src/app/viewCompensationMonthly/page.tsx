@@ -1,12 +1,13 @@
 'use client'
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { formatDateMonthToFullDate } from "../../../lib/functions";
 
 
 export default function viewCompensationMonthly() {
     const router = useRouter();
     const [data, setData] = useState("");
+    const searchParams = useSearchParams();
 
     const onSubmit = async (event) => {
         event.preventDefault();
@@ -16,9 +17,8 @@ export default function viewCompensationMonthly() {
         try 
         {
           console.log(event.target);
-          // CANNOT hard code employee ID
           // Call the API on submit
-          const response = await fetch(`/api/compensations/search/breakdown/1/date/${compDate}`, {
+          const response = await fetch(`/api/compensations/search/breakdown/${searchParams.get('emp_id')}/date/${compDate}`, {
             method: 'GET'
           })
           const data = await response.json();
@@ -56,6 +56,7 @@ export default function viewCompensationMonthly() {
                         <input type="submit" value="View Total Compensation" />
                     </form>
                     <p id="result">{ data }</p>
+                    <button onClick={() => router.push(`/editEmployeeCompensation`)}>Edit Compensation</button>
                     <button onClick={() => router.push('/')}>Home</button>
                 </div>
             </main>

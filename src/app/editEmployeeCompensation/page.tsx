@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect }from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { formatDateToShortDate } from "../../../lib/functions";
 
 
@@ -14,6 +14,7 @@ export default function EditEmployeeCompensation() {
         description: '',
         date: '',
     });
+    const searchParams = useSearchParams();
 
     function clearForm() {
         return ((document.getElementById("editCompensation")! as HTMLFormElement).reset());

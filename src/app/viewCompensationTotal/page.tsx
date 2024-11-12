@@ -9,6 +9,39 @@ export default function viewCompensationTotal() {
     const searchParams = useSearchParams();
     const [data, setData] = useState("");
 
+
+    function updateResults(data: string) { 
+        const empty = document.createElement("p");
+        document.getElementById("result")!.replaceChildren(empty);     
+        const results = JSON.parse(data);
+        // -1 to not show month total
+        for(let i = 0; i< results.length - 1; i++) {
+            const output = document.createElement("button");
+            const string = results[i].type+" "+results[i].amount+" "+results[i].description+" "+date;
+            const node = document.createTextNode(string);
+            output.appendChild(node);
+            const outputArea = document.getElementById("result")!;
+            outputArea.appendChild(output);
+            output.onclick = () => editEmployeeCompensation(results[i].comp_id);
+        }
+        const totalParagraph = document.createElement("p");
+        const total = "Total:"+results[results.length - 1].monthCompensation;
+        const totalNode = document.createTextNode(total);
+        totalParagraph.appendChild(totalNode);
+        document.getElementById("result")!.appendChild(totalParagraph);
+      }
+      function displayError(message: string) {
+        const output = document.createElement("p");
+        const node = document.createTextNode(message);
+        output.appendChild(node);
+        const outputArea = document.getElementById("result")!;
+        outputArea.replaceChildren(output);
+      }
+  
+      function editEmployeeCompensation(id: string) {
+        router.push('/editEmployeeCompensation?comp_id='+id);
+      }
+
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
         // submit form without clearing fields
@@ -60,20 +93,25 @@ export default function viewCompensationTotal() {
             if (response.ok && JSON.stringify(data) != '[]')
             {
                 setData(JSON.stringify(data));
+                //updateResults(JSON.stringify(data));
+                displayError(JSON.stringify(data));
             }
             else if (JSON.stringify(data) == '[]')
             {
                 setData('0 results found');
+                displayError('0 results found');
             }
             else
             {
                 setData('Error completing search!');
+                displayError('Error completing search!');
             }
 
         }
         catch (error)
         {
             setData('Error completing search!');
+            displayError('Error completing search!');
         }
         //clearForm();
     }

@@ -44,47 +44,49 @@ export default function viewCompensationMonthly() {
       router.push('/editEmployeeCompensation?comp_id='+id);
   }
 
-    const onSubmit = async (event) => {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const compDate = formatDateMonthToFullDate(formData.get("date"));
-        console.log(compDate);
-        try 
-        {
-          console.log(event.target);
-          // Call the API on submit
-          const response = await fetch(`/api/compensations/search/breakdown/${searchParams.get('emp_id')}/date/${compDate}`, {
-            method: 'GET'
-          })
-          const data = await response.json();
-          console.log(data);
+  
 
-          if (response.ok && JSON.stringify(data) != '[]')
-          {
-            setData(JSON.stringify(data));
-            updateResults(JSON.stringify(data));
-            //displayError(JSON.stringify(data));
-          }
-          else if (JSON.stringify(data) == '[]')
-          {
-            setData('0 results found');
-            displayError('0 results found');
-          }
-          else
-          {
-            setData('Error completing search!');
-            displayError('Error completing search!');
-          }
-        }
-        catch (error)
+  const onSubmit = async (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const compDate = formatDateMonthToFullDate(formData.get("date"));
+      console.log(compDate);
+      try 
+      {
+        console.log(event.target);
+        // Call the API on submit
+        const response = await fetch(`/api/compensations/search/breakdown/${searchParams.get('emp_id')}/date/${compDate}`, {
+          method: 'GET'
+        })
+        const data = await response.json();
+        console.log(data);
+
+        if (response.ok && JSON.stringify(data) != '[]')
         {
-          event.target.reset();
+          setData(JSON.stringify(data));
+          updateResults(JSON.stringify(data));
+          //displayError(JSON.stringify(data));
+        }
+        else if (JSON.stringify(data) == '[]')
+        {
+          setData('0 results found');
+          displayError('0 results found');
+        }
+        else
+        {
           setData('Error completing search!');
           displayError('Error completing search!');
         }
-        
       }
-    
+      catch (error)
+      {
+        event.target.reset();
+        setData('Error completing search!');
+        displayError('Error completing search!');
+      }
+      
+    }
+  
     return (
         <div>
             <main>

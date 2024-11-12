@@ -16,7 +16,7 @@ export default function searchEmployee() {
 
     async function updateResults(data: string) {
         const output = document.createElement("button");
-        const node = document.createTextNode(await data);
+        const node = document.createTextNode(data);
         output.appendChild(node);
         const outputArea = document.getElementById("result")!;
         outputArea.replaceChildren(output);
@@ -75,6 +75,7 @@ export default function searchEmployee() {
             if (response.ok && JSON.stringify(data) != '[]')
             {
                 setData(JSON.stringify(data));
+                updateResults(JSON.stringify(data));
             }
             // If call succeeded and no data was returned
             else if (JSON.stringify(data) == '[]')
@@ -85,15 +86,12 @@ export default function searchEmployee() {
             {
                 setData('Error completing search!');
             }
-            
-
         }
         catch (error)
         {
             setData('Error completing search!');
         }
         console.log(data);
-        //updateResults(data);
         //clearForm();
     }
 
@@ -116,8 +114,6 @@ export default function searchEmployee() {
         <button onClick={() => router.push('/')}>Home</button>
         <button onClick={() => router.push(`/viewEmployee?emp_id=${1}`)}>View Employee</button>
         <br/>
-        {/*make run without button */}
-        <button onClick={() => updateResults(data)}>Update</button>
         <div id="result"></div>
         </div>
         </main>

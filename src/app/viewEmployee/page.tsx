@@ -65,8 +65,7 @@ export default function viewEmployee() {
         try 
         {
             console.log(event.target);
-            // cannot HARD-CODE employee ID
-            const response = await fetch(`/api/employee/id/15`, {
+            const response = await fetch(`/api/employee/id/${searchParams.get('emp_id')}`, {
             method: 'PUT',
             body: formData,
             })
@@ -126,10 +125,9 @@ export default function viewEmployee() {
                     </form>
                     <p id="result">{ message }</p>
                     <button onClick={() => router.push('/')}>Home</button>
-                    <button onClick={() => router.push('/addEmployeeCompensation')}>Add Compensation</button>
-                    <button onClick={() => router.push('/editEmployeeCompensation')}>Edit Compensation</button>
-                    <button onClick={() => router.push('/viewCompensationMonthly')}>View Monthly Compensation</button>
-                    <button onClick={() => router.push('/viewCompensationTotal')}>View Total Compensation</button>
+                    <button onClick={() => router.push(`/addEmployeeCompensation?emp_id=${searchParams.get('emp_id')}`)}>Add Compensation</button>
+                    <button onClick={() => router.push(`/viewCompensationMonthly?emp_id=${searchParams.get('emp_id')}`)}>View Monthly Compensation</button>
+                    <button onClick={() => router.push(`/viewCompensationTotal?emp_id=${searchParams.get('emp_id')}`)}>View Total Compensation</button>
                 </div>
             </main>
         </div>

@@ -1,11 +1,12 @@
 'use client'
 import React, { useState, FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { formatDateMonthToFullDate } from "../../../lib/functions";
 
 
 export default function viewCompensationTotal() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [data, setData] = useState("");
 
     async function submitForm(event: FormEvent<HTMLFormElement>) {
@@ -13,8 +14,7 @@ export default function viewCompensationTotal() {
         // submit form without clearing fields
         var startDate = document.forms["viewCompensationTotal"]["startDate"].value;
         var endDate = document.forms["viewCompensationTotal"]["endDate"].value;
-        // Needs to be NOT hardcoded
-        var employeeId = '1';
+        var employeeId = searchParams.get('emp_id');
         
         startDate = formatDateMonthToFullDate(startDate);
         endDate = formatDateMonthToFullDate(endDate);
@@ -42,6 +42,10 @@ export default function viewCompensationTotal() {
         else if (employeeId && firstParam == true && !(employeeId.length === 0))
         {
             apiCall += `employeeId=${employeeId}`;
+        }
+        else 
+        {
+            setData('Error completing search - Employee was NOT found!');
         }
         
         try 

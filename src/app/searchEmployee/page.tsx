@@ -14,13 +14,29 @@ export default function searchEmployee() {
         document.getElementById("result")!.replaceChildren(empty);
     }
 
-    async function updateResults(data: string) {
-        const output = document.createElement("button");
-        const node = document.createTextNode(data);
+    function updateResults(data: string) { 
+        const empty = document.createElement("p");
+        document.getElementById("result")!.replaceChildren(empty);     
+        const results = JSON.parse(data);
+        for(let i = 0; i< results.length; i++) {
+            const output = document.createElement("button");
+            const string = results[i].firstname+" "+results[i].lastname+" "+results[i].to_char+" "+results[i].position;
+            const node = document.createTextNode(string);
+            output.appendChild(node);
+            const outputArea = document.getElementById("result")!;
+            outputArea.appendChild(output);
+            output.setAttribute("onclick","{() => router.push(`/viewEmployee?emp_id=$"+results[i].emp_id+"`)}")
+        }
+    }
+
+    function displayError(message: string) {
+        const output = document.createElement("p");
+        const node = document.createTextNode(message);
         output.appendChild(node);
         const outputArea = document.getElementById("result")!;
         outputArea.replaceChildren(output);
     }
+
 
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -75,21 +91,25 @@ export default function searchEmployee() {
             if (response.ok && JSON.stringify(data) != '[]')
             {
                 setData(JSON.stringify(data));
+                //displayError(JSON.stringify(data));
                 updateResults(JSON.stringify(data));
             }
             // If call succeeded and no data was returned
             else if (JSON.stringify(data) == '[]')
             {
                 setData('0 results found');
+                displayError('0 results found');
             }
             else
             {
                 setData('Error completing search!');
+                displayError('Error completing search!');
             }
         }
         catch (error)
         {
             setData('Error completing search!');
+            displayError('Error completing search!');
         }
         console.log(data);
         //clearForm();
@@ -112,7 +132,7 @@ export default function searchEmployee() {
         <br/>
         <button onClick={() => clearForm()}>Clear</button>
         <button onClick={() => router.push('/')}>Home</button>
-        <button onClick={() => router.push(`/viewEmployee?emp_id=${1}`)}>View Employee</button>
+        <button onClick={() => router.push(`/viewEmployee?emp_id=${17}`)}>View Employee</button>
         <br/>
         <div id="result"></div>
         </div>

@@ -127,7 +127,7 @@ export default function viewEmployee() {
                     <button onClick={() => router.push('/')}>Home</button>
                     <button onClick={() => router.push(`/addEmployeeCompensation?emp_id=${searchParams.get('emp_id')}`)}>Add Compensation</button>
                     <button onClick={() => router.push(`/editEmployeeCompensation`)}>Edit Compensation</button>
-                    <button onClick={() => router.push(`/viewCompensationMonthly`)}>View Monthly Compensation</button>
+                    <button onClick={() => router.push(`/viewCompensationMonthly?emp_id=${searchParams.get('emp_id')}`)}>View Monthly Compensation</button>
                     <button onClick={() => router.push(`/viewCompensationTotal`)}>View Total Compensation</button>
                 </div>
             </main>

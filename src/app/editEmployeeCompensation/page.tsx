@@ -58,10 +58,8 @@ export default function EditEmployeeCompensation() {
         try 
         {
             console.log(event.target);
-
-            // cannot HARD-CODE compensation ID
             // Runs API call to update a compensation
-            const response = await fetch(`/api/compensation/id/18`, {
+            const response = await fetch(`/api/compensation/id/${searchParams.get('comp_id')}`, {
                 method: 'PUT',
                 body: formData,
             })

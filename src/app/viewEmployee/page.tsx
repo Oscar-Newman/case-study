@@ -126,6 +126,10 @@ export default function viewEmployee() {
                     </form>
                     <p id="result">{ message }</p>
                     <button onClick={() => router.push('/')}>Home</button>
+                    <button onClick={() => router.push('/addEmployeeCompensation')}>Add Compensation</button>
+                    <button onClick={() => router.push('/editEmployeeCompensation')}>Edit Compensation</button>
+                    <button onClick={() => router.push('/viewCompensationMonthly')}>View Monthly Compensation</button>
+                    <button onClick={() => router.push('/viewCompensationTotal')}>View Total Compensation</button>
                 </div>
             </main>
         </div>

@@ -9,6 +9,34 @@ export default function viewCompensationTotal() {
     const searchParams = useSearchParams();
     const [data, setData] = useState("");
 
+
+    function updateResults(data: string) { 
+        const empty = document.createElement("p");
+        document.getElementById("result")!.replaceChildren(empty);    
+        const results = JSON.parse(data);
+        for(let i = 0; i < Object.keys(results).length; i++) {
+            const output = document.createElement("button");
+            const string = results[i].month+" "+results[i].sum;
+            const node = document.createTextNode(string);
+            output.appendChild(node);
+            const outputArea = document.getElementById("result")!;
+            outputArea.appendChild(output);
+            output.onclick = () => viewCompensationMonthly();
+        }
+      }
+
+      function displayError(message: string) {
+        const output = document.createElement("p");
+        const node = document.createTextNode(message);
+        output.appendChild(node);
+        const outputArea = document.getElementById("result")!;
+        outputArea.replaceChildren(output);
+      }
+  
+      function viewCompensationMonthly() {
+        router.push(`/viewCompensationMonthly?emp_id=${searchParams.get('emp_id')}`)
+      }
+
     async function submitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
         // submit form without clearing fields
@@ -60,20 +88,25 @@ export default function viewCompensationTotal() {
             if (response.ok && JSON.stringify(data) != '[]')
             {
                 setData(JSON.stringify(data));
+                updateResults(JSON.stringify(data));
+                //displayError(JSON.stringify(data));
             }
             else if (JSON.stringify(data) == '[]')
             {
                 setData('0 results found');
+                displayError('0 results found');
             }
             else
             {
                 setData('Error completing search!');
+                displayError('Error completing search!');
             }
 
         }
         catch (error)
         {
             setData('Error completing search!');
+            displayError('Error completing search!');
         }
         //clearForm();
     }
@@ -90,9 +123,8 @@ export default function viewCompensationTotal() {
                         <input type="month" id="endDate" name="endDate" pattern="[0-9]{4}-[0-9]{2}" required/><br />
                         <input type="submit" value="View Total Compensation" />
                     </form>
-                    <p id="result">{ data }</p>
-                    <button onClick={() => router.push(`/viewCompensationMonthly?emp_id=${searchParams.get('emp_id')}`)}>View Monthly Compensation</button>
                     <button onClick={() => router.push('/')}>Home</button>
+                    <div id="result"></div>
                 </div>
             </main>
         </div>

@@ -26,7 +26,7 @@ export default function EditEmployeeCompensation() {
             try 
             {
                 // Use API URL to the details of the object
-                const response = await fetch(`/api/compensation/id/18`, {
+                const response = await fetch(`/api/compensation/id/${searchParams.get('comp_id')}`, {
                     method: 'GET',
                 })
                 if (response.ok)

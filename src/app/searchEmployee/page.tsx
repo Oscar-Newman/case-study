@@ -25,7 +25,7 @@ export default function searchEmployee() {
             output.appendChild(node);
             const outputArea = document.getElementById("result")!;
             outputArea.appendChild(output);
-            output.setAttribute("onclick","{() => router.push(`/viewEmployee?emp_id=$"+results[i].emp_id+"`)}")
+            output.onclick = () => viewEmployee(results[i].emp_id);
         }
     }
 
@@ -35,6 +35,10 @@ export default function searchEmployee() {
         output.appendChild(node);
         const outputArea = document.getElementById("result")!;
         outputArea.replaceChildren(output);
+    }
+
+    function viewEmployee(id: string) {
+        router.push('/viewEmployee?emp_id='+id);
     }
 
 
@@ -132,7 +136,6 @@ export default function searchEmployee() {
         <br/>
         <button onClick={() => clearForm()}>Clear</button>
         <button onClick={() => router.push('/')}>Home</button>
-        <button onClick={() => router.push(`/viewEmployee?emp_id=${17}`)}>View Employee</button>
         <br/>
         <div id="result"></div>
         </div>

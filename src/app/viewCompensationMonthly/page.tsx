@@ -16,7 +16,10 @@ export default function viewCompensationMonthly() {
       // -1 to not show month total
       for(let i = 0; i< results.length - 1; i++) {
           const output = document.createElement("button");
-          const string = results[i].type+" "+results[i].amount+" "+results[i].description+" "+results[i].date;
+          let date = results[i].date;
+          date = date.split("T");
+          date = date[0];
+          const string = results[i].type+" "+results[i].amount+" "+results[i].description+" "+date;
           const node = document.createTextNode(string);
           output.appendChild(node);
           const outputArea = document.getElementById("result")!;

@@ -1,11 +1,12 @@
 'use client'
 import React, {useState} from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { formatDateMonthToFullDate } from "../../../lib/functions";
   
 export default function AddEmployeeCompensation() {
     const [message, setMessage] = useState("");
     const router = useRouter();
+    const searchParams = useSearchParams();
 
     // Function to remove elements of form using its ID in HTML
     function clearForm() {
@@ -15,8 +16,17 @@ export default function AddEmployeeCompensation() {
     const onSubmit = async (event) => {
         event.preventDefault();
         let formData = new FormData(event.target);
-        // Hard-coded
-        formData.append("employeeId", "1");
+        let employeeId = searchParams.get('emp_id');
+        if (employeeId != null)
+        {
+          formData.append("employeeId", employeeId.toString());
+        }
+        else 
+        {
+          setMessage('Error submitting form - Cannot find Employee to assign Employee Compensation!');
+          return;
+        }
+        
         
         // Change pay date from YYYY-MM in UI to YYYY-MM-FF
         const payDateFull = formatDateMonthToFullDate(formData.get("payDate"));

@@ -21,7 +21,7 @@ export default function viewCompensationTotal() {
             output.appendChild(node);
             const outputArea = document.getElementById("result")!;
             outputArea.appendChild(output);
-            output.onclick = () => viewCompensationMonthly();
+            output.onclick = () => viewCompensationMonthly(results[i].month);
         }
       }
 
@@ -33,8 +33,8 @@ export default function viewCompensationTotal() {
         outputArea.replaceChildren(output);
       }
   
-      function viewCompensationMonthly() {
-        router.push(`/viewCompensationMonthly?emp_id=${searchParams.get('emp_id')}`)
+      function viewCompensationMonthly(month) {
+        router.push(`/viewCompensationMonthly?emp_id=${searchParams.get('emp_id')}&year_month=${month}`);
       }
 
     async function submitForm(event: FormEvent<HTMLFormElement>) {

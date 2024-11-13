@@ -15,9 +15,7 @@ export default function AddEmployeeCompensation() {
 
     const onSubmit = async (event: any) => {
         event.preventDefault();
-        let formData = new FormData(event.target);
-        console.log(document.forms["addCompensation"]["description"].value == "");
-        
+        let formData = new FormData(event.target);        
         let employeeId = searchParams.get('emp_id');
         if (employeeId != null)
         {
@@ -33,7 +31,6 @@ export default function AddEmployeeCompensation() {
         // Change pay date from YYYY-MM in UI to YYYY-MM-FF
         const payDateFull = formatDateMonthToFullDate(formData.get("payDate"));
         formData.append("payDateFull", payDateFull);
-        console.log(document.forms["addCompensation"]["amount"].value == 0)
         if ((document.forms["addCompensation"]["description"].value != "") || (document.forms["addCompensation"]["compType"].value == "salary")) {
           if ((document.forms["addCompensation"]["compType"].value != "adjustment") || (document.forms["addCompensation"]["amount"].value != 0)) {
             if ((document.forms["addCompensation"]["compType"].value == "adjustment") || (document.forms["addCompensation"]["compType"].value == "salary") || (document.forms["addCompensation"]["amount"].value > 0)) {

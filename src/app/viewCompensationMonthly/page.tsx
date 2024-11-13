@@ -26,6 +26,7 @@ export default function viewCompensationMonthly() {
           const outputArea = document.getElementById("result")!;
           outputArea.appendChild(output);
           output.onclick = () => editEmployeeCompensation(results[i].comp_id);
+          output.className = "non_block";
       }
       const totalParagraph = document.createElement("p");
       const total = "Total:"+results[results.length - 1].monthCompensation;
@@ -123,7 +124,7 @@ export default function viewCompensationMonthly() {
                         <input type="submit" value="View Compensation" />
                     </form>
                     <button onClick={() => router.push('/')}>Home</button>
-                    <div id="result"></div>
+                    <div className="flex-container" id="result"></div>
                 </div>
             </main>
         </div>

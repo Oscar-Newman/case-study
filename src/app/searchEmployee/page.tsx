@@ -20,7 +20,11 @@ export default function searchEmployee() {
         const results = JSON.parse(data);
         for(let i = 0; i< results.length; i++) {
             const output = document.createElement("button");
-            const string = results[i].firstname+" "+results[i].lastname+" "+results[i].to_char+" "+results[i].position;
+            let middleName = results[i].middlename;
+            if (middleName == null) {
+                middleName = "";
+            }
+            const string = results[i].emp_id+" "+results[i].firstname+" "+middleName+" "+results[i].lastname+" "+results[i].to_char+" "+results[i].position;
             const node = document.createTextNode(string);
             output.appendChild(node);
             const outputArea = document.getElementById("result")!;

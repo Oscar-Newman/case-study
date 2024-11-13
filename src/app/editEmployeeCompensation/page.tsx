@@ -8,8 +8,8 @@ export default function EditEmployeeCompensation() {
     const router = useRouter();
     const [message, setMessage] = useState("");
     const [compensationObject , setCompensationObject] = useState({
-        compId: '',
-        compType: '',
+        comp_id: '',
+        type: '',
         amount: '',
         description: '',
         date: '',
@@ -32,11 +32,12 @@ export default function EditEmployeeCompensation() {
                 if (response.ok)
                 {
                     const data = await response.json();
+                    console.log(data);
                     var smallDate = formatDateToShortDate(data.date);
                     data.date = smallDate;
+                    console.log(data.comp_id, data.date, data.type, data.amount, data.description);
                     setCompensationObject(data);
-                
-                }
+                }   
                 else
                 {
                     setMessage('Failed to fetch compensation details!');
@@ -87,12 +88,14 @@ export default function EditEmployeeCompensation() {
                     <h1>Edit Employee Compensation</h1>
                     <form id="editCompensation" onSubmit={ submitForm }>
                         <label>Type</label>
-                        <select name="type" id="type" value={compensationObject.compType} disabled>
-                            <option value={"Salary"}>Salary</option>
-                            <option value={"Bonus"}>Bonus</option>
-                            <option value={"Commission"}>Commission</option>
-                            <option value={"Allowance"}>Allowance</option>
-                            <option value={"Adjustment"}>Adjustment</option>
+                        <select name="type" id="type" value={compensationObject.type} disabled
+                        onChange={(e) =>
+                            setCompensationObject({...compensationObject,  type: e.target.value})}>
+                            <option value={"salary"}>Salary</option>
+                            <option value={"bonus"}>Bonus</option>
+                            <option value={"commission"}>Commission</option>
+                            <option value={"allowance"}>Allowance</option>
+                            <option value={"adjustment"}>Adjustment</option>
                         </select>
                         <label>Amount</label>
                         <input type="number" id="amount" name="amount" value={compensationObject.amount} required

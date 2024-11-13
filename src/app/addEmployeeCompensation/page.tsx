@@ -39,7 +39,6 @@ export default function AddEmployeeCompensation() {
             method: 'POST',
             body: formData,
           })
-  
           if (response.ok)
           {
             setMessage('Form submitted successfully!');
@@ -65,11 +64,11 @@ export default function AddEmployeeCompensation() {
                     <form id="addCompensation" onSubmit={onSubmit}>
                         <label>Type</label>
                         <select name="compType" id="compType">
-                            <option value={"Salary"}>Salary</option>
-                            <option value={"Bonus"}>Bonus</option>
-                            <option value={"Commission"}>Commission</option>
-                            <option value={"Allowance"}>Allowance</option>
-                            <option value={"Adjustment"}>Adjustment</option>
+                            <option value={"salary"}>Salary</option>
+                            <option value={"bonus"}>Bonus</option>
+                            <option value={"commission"}>Commission</option>
+                            <option value={"allowance"}>Allowance</option>
+                            <option value={"adjustment"}>Adjustment</option>
                         </select>
                         <label>Amount</label>
                         <input type="number" id="amount" name="amount" required/><br />

@@ -39,7 +39,6 @@ export default function AddEmployeeCompensation() {
             method: 'POST',
             body: formData,
           })
-  
           if (response.ok)
           {
             setMessage('Form submitted successfully!');

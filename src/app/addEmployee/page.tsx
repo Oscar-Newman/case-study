@@ -37,6 +37,10 @@ export default function AddEmployee() {
           event.target.reset();
 
         }
+        else if (response.status === 400)
+          {
+            setMessage('Error submitting form - Employee already exists!');
+          }
         else 
         {
           event.target.reset();

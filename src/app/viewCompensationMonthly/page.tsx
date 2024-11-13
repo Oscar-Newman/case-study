@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { formatDateMonthToFullDate } from "../../../lib/functions";
 
@@ -7,6 +7,7 @@ import { formatDateMonthToFullDate } from "../../../lib/functions";
 export default function viewCompensationMonthly() {
     const router = useRouter();
     const [data, setData] = useState("");
+    const [passedDate, setPassedDate] = useState("");
     const searchParams = useSearchParams();
 
     function updateResults(data: string) { 
@@ -44,16 +45,39 @@ export default function viewCompensationMonthly() {
       router.push('/editEmployeeCompensation?comp_id='+id);
   }
 
-  
+  useEffect(() => {
+    const loadDateFromViewCompensationTotal = async () => {
+      try
+      {
+        let month_year = searchParams.get("year_month");
+        if (month_year && !(month_year.length === 0))
+        {
+          setPassedDate(month_year);
+          const compDate = formatDateMonthToFullDate(month_year);
+          getResultsFromDatabase(compDate);
+        }
+      }
+      catch (error)
+      {
+        displayError(`Error finding compensation for search!`);
+      }
+    };
+    loadDateFromViewCompensationTotal();
+  }, []);
 
-  const onSubmit = async (event) => {
-      event.preventDefault();
-      const formData = new FormData(event.target);
+  const onSubmit = async (event) => 
+    {
+      event?.preventDefault();
+      const formData = new FormData(event?.target);
       const compDate = formatDateMonthToFullDate(formData.get("date"));
-      console.log(compDate);
+      console.log(`NORMAL COMP DATE ${compDate}`);
+      getResultsFromDatabase(compDate);
+    }
+
+    async function getResultsFromDatabase(compDate)
+    {
       try 
       {
-        console.log(event.target);
         // Call the API on submit
         const response = await fetch(`/api/compensations/search/breakdown/${searchParams.get('emp_id')}/date/${compDate}`, {
           method: 'GET'
@@ -80,11 +104,9 @@ export default function viewCompensationMonthly() {
       }
       catch (error)
       {
-        event.target.reset();
         setData('Error completing search!');
         displayError('Error completing search!');
       }
-      
     }
   
     return (
@@ -92,9 +114,12 @@ export default function viewCompensationMonthly() {
             <main>
                 <div>
                     <h1>View Compensation For A Specific Month</h1>
-                    <form id="view compensation monthly" onSubmit={onSubmit}>
+                    <form id="viewCompensationMonthly" onSubmit={onSubmit}>
                         <label>Month YYYY-MM</label>
-                        <input type="month" id="date" name="date" pattern="[0-9]{4}-[0-9]{2}" required/><br />
+                        <input type="month" id="date" name="date" pattern="[0-9]{4}-[0-9]{2}" value={passedDate} required
+                        onChange={(e) =>
+                          setPassedDate(e.target.value)}/>
+                        <br />
                         <input type="submit" value="View Compensation" />
                     </form>
                     <button onClick={() => router.push('/')}>Home</button>

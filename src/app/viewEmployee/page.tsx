@@ -74,6 +74,10 @@ export default function viewEmployee() {
             {
                 setMessage('Form submitted successfully!');
             }
+            else if (response.status === 400)
+            {
+                setMessage('Error submitting form - The employee is identical in the database!');
+            }
             else 
             {
                 setMessage('Error submitting form!');

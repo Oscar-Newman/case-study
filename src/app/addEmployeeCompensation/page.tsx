@@ -13,9 +13,9 @@ export default function AddEmployeeCompensation() {
         return ((document.getElementById("addCompensation")! as HTMLFormElement).reset());
     }
 
-    const onSubmit = async (event) => {
+    const onSubmit = async (event: any) => {
         event.preventDefault();
-        let formData = new FormData(event.target);
+        let formData = new FormData(event.target);        
         let employeeId = searchParams.get('emp_id');
         if (employeeId != null)
         {
@@ -31,18 +31,19 @@ export default function AddEmployeeCompensation() {
         // Change pay date from YYYY-MM in UI to YYYY-MM-DD
         const payDateFull = formatDateMonthToFullDate(formData.get("payDate"));
         formData.append("payDateFull", payDateFull);
-
+        if ((document.forms["addCompensation"]["description"].value != "") || (document.forms["addCompensation"]["compType"].value == "salary")) {
+          if ((document.forms["addCompensation"]["compType"].value != "adjustment") || (document.forms["addCompensation"]["amount"].value != 0)) {
+            if ((document.forms["addCompensation"]["compType"].value == "adjustment") || (document.forms["addCompensation"]["compType"].value == "salary") || (document.forms["addCompensation"]["amount"].value > 0)) {
         try 
         {
           // Go to API to create new compensation using form data as input
           const response = await fetch('/api/compensation/new', {
-            method: 'POST',
-            body: formData,
+          method: 'POST',
+          body: formData,
           })
           if (response.ok)
           {
-            setMessage('Form submitted successfully!');
-  
+            setMessage('Form submitted successfully!');  
           }
           else if (response.status == 400)
           {
@@ -56,6 +57,15 @@ export default function AddEmployeeCompensation() {
         catch (error)
         {
           setMessage('Error submitting form!');
+        }
+        } else {
+          setMessage("Amount must be greater than zero");
+        }
+        } else {
+          setMessage("Adjustment can't be zero");
+        }
+        } else {
+          setMessage('Non salary entries require a description');
         }
         
         clearForm();    

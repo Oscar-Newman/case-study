@@ -12,7 +12,8 @@ export default function viewCompensationMonthly() {
 
     function updateResults(data: string) { 
       const empty = document.createElement("p");
-      document.getElementById("result")!.replaceChildren(empty);     
+      document.getElementById("result")!.replaceChildren(empty); 
+      document.getElementById("total")!.replaceChildren(empty);   
       const results = JSON.parse(data);
       // -1 to not show month total
       for(let i = 0; i< results.length - 1; i++) {
@@ -40,6 +41,8 @@ export default function viewCompensationMonthly() {
       output.appendChild(node);
       const outputArea = document.getElementById("result")!;
       outputArea.replaceChildren(output);
+      const empty = document.createElement("p");
+      document.getElementById("total")!.replaceChildren(empty); 
     }
 
     function editEmployeeCompensation(id: string) {

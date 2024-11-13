@@ -26,12 +26,13 @@ export default function viewCompensationMonthly() {
           const outputArea = document.getElementById("result")!;
           outputArea.appendChild(output);
           output.onclick = () => editEmployeeCompensation(results[i].comp_id);
+          output.className = "non_block";
       }
       const totalParagraph = document.createElement("p");
       const total = "Total:"+results[results.length - 1].monthCompensation;
       const totalNode = document.createTextNode(total);
       totalParagraph.appendChild(totalNode);
-      document.getElementById("result")!.appendChild(totalParagraph);
+      document.getElementById("total")!.appendChild(totalParagraph);
     }
     function displayError(message: string) {
       const output = document.createElement("p");
@@ -123,7 +124,8 @@ export default function viewCompensationMonthly() {
                         <input type="submit" value="View Compensation" />
                     </form>
                     <button onClick={() => router.push('/')}>Home</button>
-                    <div id="result"></div>
+                    <div className="flex-container" id="result"></div>
+                    <p id="total"></p>
                 </div>
             </main>
         </div>

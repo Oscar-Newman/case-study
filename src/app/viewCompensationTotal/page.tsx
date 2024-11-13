@@ -22,6 +22,7 @@ export default function viewCompensationTotal() {
             const outputArea = document.getElementById("result")!;
             outputArea.appendChild(output);
             output.onclick = () => viewCompensationMonthly(results[i].month);
+            output.className = "non_block";
         }
       }
 
@@ -124,7 +125,7 @@ export default function viewCompensationTotal() {
                         <input type="submit" value="View Total Compensation" />
                     </form>
                     <button onClick={() => router.push('/')}>Home</button>
-                    <div id="result"></div>
+                    <div className="flex-container" id="result"></div>
                 </div>
             </main>
         </div>

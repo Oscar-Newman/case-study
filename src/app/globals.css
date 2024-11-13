@@ -36,6 +36,21 @@ button {
   width: 40%;
 }
 
+.non_block {
+  display: inline-block;
+  flex-direction: column;
+  padding: 15px;
+  margin-left: 0%;
+  margin-right: 0%;
+}
+
+.flex-container {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 select {
   border-style: groove;
   padding: 15px;

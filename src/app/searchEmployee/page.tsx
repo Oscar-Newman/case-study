@@ -20,12 +20,17 @@ export default function searchEmployee() {
         const results = JSON.parse(data);
         for(let i = 0; i< results.length; i++) {
             const output = document.createElement("button");
-            const string = results[i].firstname+" "+results[i].lastname+" "+results[i].to_char+" "+results[i].position;
+            let middleName = results[i].middlename;
+            if (middleName == null) {
+                middleName = "";
+            }
+            const string = results[i].emp_id+" "+results[i].firstname+" "+middleName+" "+results[i].lastname+" "+results[i].to_char+" "+results[i].position;
             const node = document.createTextNode(string);
             output.appendChild(node);
             const outputArea = document.getElementById("result")!;
             outputArea.appendChild(output);
             output.onclick = () => viewEmployee(results[i].emp_id);
+            output.className = "non_block";
         }
     }
 
@@ -137,7 +142,7 @@ export default function searchEmployee() {
         <button onClick={() => clearForm()}>Clear</button>
         <button onClick={() => router.push('/')}>Home</button>
         <br/>
-        <div id="result"></div>
+        <div className="flex-container" id="result"></div>
         </div>
         </main>
         </div>

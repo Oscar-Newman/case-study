@@ -28,7 +28,7 @@ export default function AddEmployeeCompensation() {
         }
         
         
-        // Change pay date from YYYY-MM in UI to YYYY-MM-FF
+        // Change pay date from YYYY-MM in UI to YYYY-MM-DD
         const payDateFull = formatDateMonthToFullDate(formData.get("payDate"));
         formData.append("payDateFull", payDateFull);
         if ((document.forms["addCompensation"]["description"].value != "") || (document.forms["addCompensation"]["compType"].value == "salary")) {
@@ -44,6 +44,10 @@ export default function AddEmployeeCompensation() {
           if (response.ok)
           {
             setMessage('Form submitted successfully!');  
+          }
+          else if (response.status == 400)
+          {
+            setMessage('Error submitting form - there can only be ONE employee compensation salary for an employee in a month!');
           }
           else 
           {
@@ -89,6 +93,7 @@ export default function AddEmployeeCompensation() {
                         <input type="submit" value="Add Employee Compensation" />
                     </form>
                     <button onClick={() => router.push('/')}>Home</button>
+                    <br />
                     <p id="message">{message}</p>
                 </div>
             </main>

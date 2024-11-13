@@ -32,7 +32,7 @@ export default function viewCompensationMonthly() {
       const total = "Total:"+results[results.length - 1].monthCompensation;
       const totalNode = document.createTextNode(total);
       totalParagraph.appendChild(totalNode);
-      document.getElementById("result")!.appendChild(totalParagraph);
+      document.getElementById("total")!.appendChild(totalParagraph);
     }
     function displayError(message: string) {
       const output = document.createElement("p");
@@ -125,6 +125,7 @@ export default function viewCompensationMonthly() {
                     </form>
                     <button onClick={() => router.push('/')}>Home</button>
                     <div className="flex-container" id="result"></div>
+                    <p id="total"></p>
                 </div>
             </main>
         </div>

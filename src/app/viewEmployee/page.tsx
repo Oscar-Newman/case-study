@@ -124,10 +124,12 @@ export default function viewEmployee() {
                         <input type="submit" value="Edit Employee" />
                     </form>
                     <p id="result">{ message }</p>
-                    <button onClick={() => router.push('/')}>Home</button>
-                    <button onClick={() => router.push(`/addEmployeeCompensation?emp_id=${searchParams.get('emp_id')}`)}>Add Compensation</button>
-                    <button onClick={() => router.push(`/viewCompensationMonthly?emp_id=${searchParams.get('emp_id')}`)}>View Monthly Compensation</button>
-                    <button onClick={() => router.push(`/viewCompensationTotal?emp_id=${searchParams.get('emp_id')}`)}>View Total Compensation</button>
+                    <div className="flex-container">
+                        <button className="non_block" onClick={() => router.push('/')}>Home</button>
+                        <button className="non_block" onClick={() => router.push(`/addEmployeeCompensation?emp_id=${searchParams.get('emp_id')}`)}>Add Compensation</button>
+                        <button className="non_block" onClick={() => router.push(`/viewCompensationMonthly?emp_id=${searchParams.get('emp_id')}`)}>View Monthly Compensation</button>
+                        <button className="non_block" onClick={() => router.push(`/viewCompensationTotal?emp_id=${searchParams.get('emp_id')}`)}>View Total Compensation</button>
+                    </div>
                 </div>
             </main>
         </div>
